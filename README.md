@@ -34,5 +34,5 @@ Used technologies:
 	- Java 8
 	- Git
 
-##### I spent about 7-8 hours on solution to this test task
-This is my first project on Spring Boot, don't judge me strictly :)
+#### I spent about 7-8 hours on solution to this test task
+
