@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ua.korzh.testTask.exception.EmailExistsException;
 import ua.korzh.testTask.model.Account;
 import ua.korzh.testTask.model.Client;
 import ua.korzh.testTask.clientService.*;
@@ -53,11 +54,15 @@ public class RestControllerTest {
         Client client = new Client("email", "password");
         ObjectMapper mapper = new ObjectMapper();
 
-        given(singUpService.register(anyString(), anyString())).willReturn(client);
+        given(singUpService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
         this.mockMvc.perform(
                 post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(client)));
+        this.mockMvc.perform(
+                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(null)));
     }
 
     @Test
