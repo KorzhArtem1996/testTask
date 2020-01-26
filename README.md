@@ -24,15 +24,15 @@ What we will take into consideration on final valuation:
 ### Solution
 
 Used technologies:
-	- Spring Boot
-	- Spring Web
-	- Spring Data Jpa
-	- Spring Test
-	- Embedded in-memory H2 database
-	- Embedded Tomcat
-	- Maven 
-	- Java 8
-	- Git
+- Spring Boot
+- Spring Web
+- Spring Data Jpa
+- Spring Test
+- Embedded in-memory H2 database
+- Embedded Tomcat
+- Maven 
+- Java 8
+- Git
 
 #### I spent about 7-8 hours on solution to this test task
 
