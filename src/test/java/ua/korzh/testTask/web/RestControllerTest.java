@@ -47,7 +47,7 @@ public class RestControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         given(clientService.getAll()).willReturn(list);
         this.mockMvc.perform(
-                get("/get_all").accept(MediaType.APPLICATION_JSON))
+                get("/users").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(list)));
     }
@@ -59,11 +59,11 @@ public class RestControllerTest {
 
         given(singUpService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
         this.mockMvc.perform(
-                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
+                post("/users/email/password").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(client)));
         this.mockMvc.perform(
-                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
+                post("/users/email/password").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(null)));
     }
@@ -75,12 +75,12 @@ public class RestControllerTest {
         given(depositeService.deposite(eq(client), anyDouble())).willReturn(false, true);
 
         this.mockMvc.perform(
-                post("/deposite?money=500").contentType(MediaType.APPLICATION_JSON)
+                put("/users/money/500").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(false)));
         this.mockMvc.perform(
-                post("/deposite?money=500").contentType(MediaType.APPLICATION_JSON)
+                put("/users/money/500").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(true)));
@@ -93,7 +93,7 @@ public class RestControllerTest {
         given(withdrawService.withdraw(eq(client), anyDouble())).willReturn(100d);
 
         this.mockMvc.perform(
-                post("/withdraw?sum=50").contentType(MediaType.APPLICATION_JSON)
+                put("/users/cash/50").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(100d)));
@@ -107,7 +107,7 @@ public class RestControllerTest {
         given(checkBalanceService.checkBalance(client)).willReturn(new CheckBalanceService.Balance(client, 500d));
 
         this.mockMvc.perform(
-                post("/check_balance").contentType(MediaType.APPLICATION_JSON)
+                post("/users/balance").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500d))));
