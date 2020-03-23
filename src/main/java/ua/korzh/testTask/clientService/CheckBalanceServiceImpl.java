@@ -8,7 +8,7 @@ public class CheckBalanceServiceImpl implements CheckBalanceService {
     @Override
     public CheckBalanceService.Balance checkBalance(Client client) {
         if (client != null) {
-            double bal = client.getAccount().getBalance();
+            long bal = client.getAccount().getBalance();
             return new CheckBalanceService.Balance(client, bal);
         }
         return null;

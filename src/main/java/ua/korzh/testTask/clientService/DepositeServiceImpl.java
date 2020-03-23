@@ -12,7 +12,7 @@ public class DepositeServiceImpl implements DepositeService {
     private AccountService accountService;
 
     @Override
-    public boolean deposite(Client client, double money) {
+    public boolean deposite(Client client, long money) {
         if (client != null && money >= 0){
             Account account = client.getAccount();
 

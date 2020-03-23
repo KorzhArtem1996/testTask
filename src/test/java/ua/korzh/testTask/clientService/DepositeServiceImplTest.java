@@ -23,9 +23,9 @@ class DepositeServiceImplTest {
         Client client1 = clientRepository.getById(client.getId());
         Account account = client1.getAccount();
         assertNotNull(account);
-        assertEquals(0d, account.getBalance());
-        depositeService.deposite(client1, 500d);
-        assertEquals(500d, client1.getAccount().getBalance());
+        assertEquals(0L, account.getBalance());
+        depositeService.deposite(client1, 500L);
+        assertEquals(500L, client1.getAccount().getBalance());
 
     }
 }

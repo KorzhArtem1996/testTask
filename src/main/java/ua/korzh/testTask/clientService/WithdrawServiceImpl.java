@@ -12,11 +12,11 @@ public class WithdrawServiceImpl implements WithdrawService {
     private AccountService accountService;
 
     @Override
-    public double withdraw(Client client, double sum) {
+    public long withdraw(Client client, long sum) {
         if (client != null) {
             Account account = client.getAccount();
             return accountService.withDrawMoney(account, sum);
         }
-        return -1d;
+        return -1L;
     }
 }

@@ -9,19 +9,19 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "BALANCE")
-    private double balance;
+    private long balance;
 
     public Account() {}
 
-    public Account(double balance) {
+    public Account(long balance) {
         this.balance = balance;
     }
 
-    public double getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 

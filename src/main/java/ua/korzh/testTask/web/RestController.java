@@ -41,12 +41,12 @@ public class RestController {
     }
 
     @PutMapping("/users/money/{money}")
-    public Boolean deposite(@RequestBody Client client, @PathVariable Double money) {
+    public Boolean deposite(@RequestBody Client client, @PathVariable Long money) {
         return depositeService.deposite(client, money);
     }
 
     @PutMapping("/users/cash/{sum}")
-    public Double withdraw(@RequestBody Client client, @PathVariable Double sum) {
+    public Long withdraw(@RequestBody Client client, @PathVariable Long sum) {
         return withdrawService.withdraw(client, sum);
     }
 

@@ -12,7 +12,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AcountRepository acountRepository;
     @Override
-    public Account create(double balance) {
+    public Account create(long balance) {
         Account account = new Account(balance);
         acountRepository.save(account);
         return account;
@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public boolean addMoney(Account account, double balance) {
+    public boolean addMoney(Account account, long balance) {
         if (account != null) {
             account.setBalance(account.getBalance() + balance);
             acountRepository.saveAndFlush(account);
@@ -31,15 +31,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public double withDrawMoney(Account account, double sum) {
+    public long withDrawMoney(Account account, long sum) {
         if (account == null) return -1;
-        double res = sum;
+        long res = sum;
         if (sum <= account.getBalance()) {
             account.setBalance(account.getBalance() - sum);
 
         } else {
             res = account.getBalance();
-            account.setBalance(0d);
+            account.setBalance(0L);
         }
         acountRepository.saveAndFlush(account);
         return res;

@@ -72,7 +72,7 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(eq(client), anyDouble())).willReturn(false, true);
+        given(depositeService.deposite(eq(client), anyLong())).willReturn(false, true);
 
         this.mockMvc.perform(
                 put("/users/money/500").contentType(MediaType.APPLICATION_JSON)
@@ -90,13 +90,13 @@ public class RestControllerTest {
     public void withdrawMoneyTest() throws Exception {
         Client client = new Client("withdraw", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(withdrawService.withdraw(eq(client), anyDouble())).willReturn(100d);
+        given(withdrawService.withdraw(eq(client), anyLong())).willReturn(100L);
 
         this.mockMvc.perform(
                 put("/users/cash/50").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(100d)));
+                .andExpect(content().string(mapper.writeValueAsString(100L)));
     }
 
     @Test
@@ -104,12 +104,12 @@ public class RestControllerTest {
         Client client = new Client("check", "balance");
         client.setAccount(new Account());
         ObjectMapper mapper = new ObjectMapper();
-        given(checkBalanceService.checkBalance(client)).willReturn(new CheckBalanceService.Balance(client, 500d));
+        given(checkBalanceService.checkBalance(client)).willReturn(new CheckBalanceService.Balance(client, 500L));
 
         this.mockMvc.perform(
                 post("/users/balance").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(client)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500d))));
+                .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500L))));
     }
 }

@@ -5,14 +5,14 @@ import ua.korzh.testTask.model.Client;
 public interface CheckBalanceService {
     public Balance checkBalance(Client client);
     public static class Balance {
-        private final double balance;
+        private final long balance;
         private final Client client;
 
-        public Balance(Client client, double balance) {
+        public Balance(Client client, long balance) {
             this.client = client;
             this.balance = balance;
         }
-        public double getBalance() {
+        public long getBalance() {
             return balance;
         }
         public Client getClient() {

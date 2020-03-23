@@ -21,9 +21,9 @@ class CheckBalanceServiceImplTest {
     @Test
     public void checkBalance() {
         Client client = singUpService.register("check", "c");
-        depositeService.deposite(client, 500d);
+        depositeService.deposite(client, 500L);
         Client client1 = clientRepository.getById(client.getId());
         CheckBalanceService.Balance balance = checkBalanceService.checkBalance(client1);
-        assertEquals(500d, balance.getBalance());
+        assertEquals(500L, balance.getBalance());
     }
 }
