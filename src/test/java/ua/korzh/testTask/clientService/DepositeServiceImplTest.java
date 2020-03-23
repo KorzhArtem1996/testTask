@@ -7,6 +7,7 @@ import ua.korzh.testTask.model.Account;
 import ua.korzh.testTask.model.Client;
 import ua.korzh.testTask.repository.ClientRepository;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,26 +35,28 @@ class DepositeServiceImplTest {
     @Test
     public void parrllelDepositeTest() throws InterruptedException {
         Client client = singUpService.register("parallel_deposite", "s");
-
-//        for (int i = 0; i < 3; i++) {
-//            int finalI = i;
-//            new Thread(() -> {
-//                Client client1 = clientRepository.getById(client.getId());
-//                depositeService.deposite(client1, 5L + finalI);
-//            }).start();
-//        }
-        AtomicBoolean b1 = new AtomicBoolean(false);
-        AtomicBoolean b2 = new AtomicBoolean(false);
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         Thread t1 = new Thread(() -> {
-           Client client1 = clientRepository.getById(client.getId());
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Client client1 = clientRepository.getById(client.getId());
            depositeService.deposite(client1, 10L);
         });
         Thread t2 = new Thread(() -> {
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Client client1 = clientRepository.getById(client.getId());
             depositeService.deposite(client1, 20L);
         });
         t1.start();
         t2.start();
+        countDownLatch.countDown();
         Thread.sleep(3000);
 
     }
