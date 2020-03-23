@@ -10,6 +10,8 @@ public class Account {
     private int id;
     @Column(name = "BALANCE")
     private long balance;
+    @org.springframework.data.annotation.Version
+    private long version;
 
     public Account() {}
 

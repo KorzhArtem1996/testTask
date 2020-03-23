@@ -19,7 +19,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
     public boolean addMoney(Account account, long balance) {
         if (account != null) {
             account.setBalance(account.getBalance() + balance);
@@ -30,7 +29,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
     public long withDrawMoney(Account account, long sum) {
         if (account == null) return -1;
         long res = sum;
