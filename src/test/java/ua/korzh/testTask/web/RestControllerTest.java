@@ -74,7 +74,7 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/1/deposite?money=500").contentType(MediaType.APPLICATION_JSON))
+                put("/clients/1/deposite?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(false)));
         this.mockMvc.perform(
@@ -88,10 +88,10 @@ public class RestControllerTest {
         Client client = new Client("withdraw", "money");
         ObjectMapper mapper = new ObjectMapper();
         given(withdrawService.withdraw(eq(client), anyLong())).willReturn(100L);
+        given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/users/cash/50").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(client)))
+                put("/clients/5/withdraw?sum=100").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(100L)));
     }

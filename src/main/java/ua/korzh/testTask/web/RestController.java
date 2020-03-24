@@ -46,8 +46,9 @@ public class RestController {
         return depositeService.deposite(client, money);
     }
 
-    @PutMapping("/users/cash/{sum}")
-    public Long withdraw(@RequestBody Client client, @PathVariable Long sum) {
+    @PutMapping("/clients/{id}/withdraw")
+    public Long withdraw(@PathVariable int id, @RequestParam Long sum) {
+        Client client = clientService.getById(id);
         return withdrawService.withdraw(client, sum);
     }
     //clients/{id}/balance
