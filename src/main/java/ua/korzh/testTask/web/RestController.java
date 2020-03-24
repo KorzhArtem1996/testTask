@@ -21,7 +21,7 @@ public class RestController {
     private WithdrawService withdrawService;
     @Autowired
     private  CheckBalanceService checkBalanceService;
-    //clients
+
     @GetMapping("/clients")
     public List<Client> getAll() {
         return clientService.getAll();
@@ -39,7 +39,7 @@ public class RestController {
         }
         return opt;
     }
-    // /clients/{id}/deposite
+
     @PutMapping("/clients/{id}/deposite")
     public Boolean deposite(@PathVariable int id, @RequestParam Long money) {
         Client client = clientService.getById(id);
@@ -51,10 +51,10 @@ public class RestController {
         Client client = clientService.getById(id);
         return withdrawService.withdraw(client, sum);
     }
-    //clients/{id}/balance
-    //get method
-    @PostMapping("/users/balance")
-    public CheckBalanceService.Balance checkBalance(@RequestBody Client client) {
+
+    @GetMapping("/clients/{id}/balance")
+    public CheckBalanceService.Balance checkBalance(@PathVariable int id) {
+        Client client = clientService.getById(id);
         return checkBalanceService.checkBalance(client);
     }
 }

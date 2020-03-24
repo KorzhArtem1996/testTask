@@ -70,7 +70,7 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(any(), anyLong())).willReturn(false, true);
+        given(depositeService.deposite(eq(client), anyLong())).willReturn(false, true);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
@@ -101,11 +101,11 @@ public class RestControllerTest {
         Client client = new Client("check", "balance");
         client.setAccount(new Account());
         ObjectMapper mapper = new ObjectMapper();
-        given(checkBalanceService.checkBalance(client)).willReturn(new CheckBalanceService.Balance(client, 500L));
+        given(checkBalanceService.checkBalance(eq(client))).willReturn(new CheckBalanceService.Balance(client, 500L));
+        given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                post("/users/balance").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(client)))
+                get("/clients/3/balance").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500L))));
     }
