@@ -38,14 +38,14 @@ public class RestControllerTest {
     private CheckBalanceService checkBalanceService;
 
     @Test
-    public void getAllUserEmailsTest() throws Exception {
+    public void getAllClientsTest() throws Exception {
         List<Client> list = Stream
                 .of(new Client("client1", "password1"), new Client("client2", "password2"), new Client("client3", "password3"))
                 .collect(Collectors.toList());
         ObjectMapper mapper = new ObjectMapper();
         given(clientService.getAll()).willReturn(list);
         this.mockMvc.perform(
-                get("/users").accept(MediaType.APPLICATION_JSON))
+                get("/clients").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(list)));
     }
@@ -57,11 +57,11 @@ public class RestControllerTest {
 
         given(singUpService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
         this.mockMvc.perform(
-                post("/users/email/password").accept(MediaType.APPLICATION_JSON))
+                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(client)));
         this.mockMvc.perform(
-                post("/users/email/password").accept(MediaType.APPLICATION_JSON))
+                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(null)));
     }
@@ -70,16 +70,15 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(eq(client), anyLong())).willReturn(false, true);
+        given(depositeService.deposite(any(), anyLong())).willReturn(false, true);
+        given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/users/money/500").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(client)))
+                put("/clients/1/deposite?money=500").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(false)));
         this.mockMvc.perform(
-                put("/users/money/500").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(client)))
+                put("/clients/1/deposite?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(true)));
     }

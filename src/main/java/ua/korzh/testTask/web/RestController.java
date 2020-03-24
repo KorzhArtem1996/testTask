@@ -22,13 +22,13 @@ public class RestController {
     @Autowired
     private  CheckBalanceService checkBalanceService;
     //clients
-    @GetMapping("/users")
+    @GetMapping("/clients")
     public List<Client> getAll() {
         return clientService.getAll();
     }
 
-    @PostMapping("/users/{email}/{password}")
-    public Optional<Client> register(@PathVariable String email, @PathVariable String password) {
+    @PostMapping("/register")
+    public Optional<Client> register(@RequestParam String email, @RequestParam String password) {
         Client client;
         Optional<Client> opt;
         try {
@@ -40,8 +40,9 @@ public class RestController {
         return opt;
     }
     // /clients/{id}/deposite
-    @PutMapping("/users/money/{money}")
-    public Boolean deposite(@RequestBody Client client, @PathVariable Long money) {
+    @PutMapping("/clients/{id}/deposite")
+    public Boolean deposite(@PathVariable int id, @RequestParam Long money) {
+        Client client = clientService.getById(id);
         return depositeService.deposite(client, money);
     }
 
