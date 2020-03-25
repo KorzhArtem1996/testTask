@@ -34,8 +34,10 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "email='" + email + '\'' +
+                "id=" + id +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", accounts=" + accounts +
                 '}';
     }
 
@@ -67,11 +69,11 @@ public class Client {
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
         return id == client.id &&
-                email.equals(client.email);
+                email.equals(client.email) && password.equals(client.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email);
+        return Objects.hash(id, email, password);
     }
 }

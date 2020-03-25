@@ -40,9 +40,9 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
-                ", balance=" + balance +
-                ", client=" + client +
+                "id = " + id +
+                ", balance = " + balance +
+                ", clients id =" + client.getId() +
                 '}';
     }
 
@@ -52,11 +52,11 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return id == account.id &&
-                client.equals(account.client);
+                balance == account.balance;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, client);
+        return Objects.hash(id, balance);
     }
 }
