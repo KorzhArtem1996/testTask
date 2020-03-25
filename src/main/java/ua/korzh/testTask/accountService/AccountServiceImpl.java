@@ -2,8 +2,6 @@ package ua.korzh.testTask.accountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ua.korzh.testTask.accountService.AccountService;
 import ua.korzh.testTask.model.Account;
 import ua.korzh.testTask.model.Client;
 import ua.korzh.testTask.repository.AcountRepository;
