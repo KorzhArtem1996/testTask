@@ -1,7 +1,8 @@
 package ua.korzh.testTask.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
+
 @Entity(name = "client")
 public class Client {
     @Id
@@ -11,12 +12,11 @@ public class Client {
     private String email;
     @Column(name = "PASSWORD")
     private String password;
-    @OneToOne(optional = false, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "ACCOUNT")
-    private Account account;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Account> accounts = new HashSet<>();
 
     public void setAccount(Account account) {
-        this.account = account;
+        this.accounts.add(account);
     }
 
     public Client() {}
@@ -43,8 +43,18 @@ public class Client {
         return email;
     }
 
-    public Account getAccount() {
-        return account;
+    public Account getAccount(int id) {
+        for (Account account : accounts) {
+            if (account.getId() == id) return account;
+        }
+        return null;
+    }
+    public List<Integer> getAccountsId() {
+        List<Integer> res = new ArrayList<>();
+        for (Account account : accounts) {
+            res.add(account.getId());
+        }
+        return res;
     }
 
     public int getId() {

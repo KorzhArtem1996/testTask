@@ -70,15 +70,15 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(eq(client), anyLong())).willReturn(false, true);
+        given(depositeService.deposite(eq(client), anyLong(), anyInt())).willReturn(false, true);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/1/deposite?money=500").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(false)));
         this.mockMvc.perform(
-                put("/clients/1/deposite?money=500").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(true)));
     }
@@ -87,11 +87,11 @@ public class RestControllerTest {
     public void withdrawMoneyTest() throws Exception {
         Client client = new Client("withdraw", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(withdrawService.withdraw(eq(client), anyLong())).willReturn(100L);
+        given(withdrawService.withdraw(eq(client), anyLong(), anyInt())).willReturn(100L);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/5/withdraw?sum=100").accept(MediaType.APPLICATION_JSON))
+                put("/clients/5/withdraw?sum=100&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(100L)));
     }
@@ -101,11 +101,11 @@ public class RestControllerTest {
         Client client = new Client("check", "balance");
         client.setAccount(new Account());
         ObjectMapper mapper = new ObjectMapper();
-        given(checkBalanceService.checkBalance(eq(client))).willReturn(new CheckBalanceService.Balance(client, 500L));
+        given(checkBalanceService.checkBalance(eq(client), anyInt())).willReturn(new CheckBalanceService.Balance(client, 500L));
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                get("/clients/3/balance").accept(MediaType.APPLICATION_JSON))
+                get("/clients/3/balance?accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500L))));
     }

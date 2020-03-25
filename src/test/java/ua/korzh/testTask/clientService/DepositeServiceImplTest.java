@@ -21,10 +21,10 @@ class DepositeServiceImplTest {
     public void depositeTest() {
         Client client = singUpService.register("deposite", "s");
         Client client1 = clientRepository.getById(client.getId());
-        Account account = client1.getAccount();
+        Account account = client1.getAccount(client1.getAccountsId().get(0));
         assertNotNull(account);
         assertEquals(0L, account.getBalance());
-        depositeService.deposite(client1, 500L);
-        assertEquals(500L, client1.getAccount().getBalance());
+        depositeService.deposite(client1, 500L, client1.getAccountsId().get(0));
+        assertEquals(500L, client1.getAccount(client1.getAccountsId().get(0)).getBalance());
     }
 }

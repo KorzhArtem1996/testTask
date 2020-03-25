@@ -21,11 +21,11 @@ class WithdrawServiceImplTest {
     @Test
     public void withDrawTest() {
         Client client = singUpService.register("withdraw", "l");
-        depositeService.deposite(client, 100L);
+        depositeService.deposite(client, 100L, client.getAccountsId().get(0));
         Client client1 = clientRepository.getById(client.getId());
-        double res = withdrawService.withdraw(client1, 120L);
+        double res = withdrawService.withdraw(client1, 120L, client1.getAccountsId().get(0));
         assertEquals(100L, res);
-        assertEquals(0L, client1.getAccount().getBalance());
+        assertEquals(0L, client1.getAccount(client1.getAccountsId().get(0)).getBalance());
     }
 
 

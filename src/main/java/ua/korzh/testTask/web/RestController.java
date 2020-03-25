@@ -41,20 +41,20 @@ public class RestController {
     }
 
     @PutMapping("/clients/{id}/deposite")
-    public Boolean deposite(@PathVariable int id, @RequestParam Long money) {
+    public Boolean deposite(@PathVariable int id, @RequestParam Long money, @RequestParam int accountId) {
         Client client = clientService.getById(id);
-        return depositeService.deposite(client, money);
+        return depositeService.deposite(client, money, accountId);
     }
 
     @PutMapping("/clients/{id}/withdraw")
-    public Long withdraw(@PathVariable int id, @RequestParam Long sum) {
+    public Long withdraw(@PathVariable int id, @RequestParam Long sum, int accountId) {
         Client client = clientService.getById(id);
-        return withdrawService.withdraw(client, sum);
+        return withdrawService.withdraw(client, sum, accountId);
     }
 
     @GetMapping("/clients/{id}/balance")
-    public CheckBalanceService.Balance checkBalance(@PathVariable int id) {
+    public CheckBalanceService.Balance checkBalance(@PathVariable int id, int accountId) {
         Client client = clientService.getById(id);
-        return checkBalanceService.checkBalance(client);
+        return checkBalanceService.checkBalance(client, accountId);
     }
 }

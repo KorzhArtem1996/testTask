@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testTask.accountService.AccountService;
 import ua.korzh.testTask.model.Account;
+import ua.korzh.testTask.model.Client;
 import ua.korzh.testTask.repository.AcountRepository;
 
 @Service
@@ -12,8 +13,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AcountRepository acountRepository;
     @Override
-    public Account create(long balance) {
+    public Account create(long balance, Client client) {
         Account account = new Account(balance);
+        account.setClient(client);
         acountRepository.save(account);
         return account;
     }

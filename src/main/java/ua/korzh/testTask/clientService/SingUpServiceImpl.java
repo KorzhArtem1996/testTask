@@ -25,9 +25,9 @@ public class SingUpServiceImpl implements SingUpService {
             if (cl.getEmail().equals(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
         }
         Client client = new Client(email, password);
-        Account account = accountService.create(0);
-        client.setAccount(account);
         clientRepository.save(client);
+        Account account = accountService.create(0, client);
+        client.setAccount(account);
         return client;
     }
 

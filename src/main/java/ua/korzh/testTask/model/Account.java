@@ -19,6 +19,8 @@ public class Account {
         this.balance = balance;
     }
 
+    public int getId() {return id;}
+
     public long getBalance() {
         return balance;
     }
@@ -27,8 +29,13 @@ public class Account {
         this.balance = balance;
     }
 
-    @OneToOne(optional = false, mappedBy = "account")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client")
     private Client client;
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     @Override
     public String toString() {
