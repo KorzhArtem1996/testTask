@@ -1,0 +1,32 @@
+package ua.korzh.testproject.clientservice;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import ua.korzh.testproject.model.Client;
+import ua.korzh.testproject.repository.ClientRepository;
+
+import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest
+class WithdrawServiceImplTest {
+    @Autowired
+    private SingUpService singUpService;
+    @Autowired
+    private DepositeService depositeService;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private WithdrawService withdrawService;
+
+    @Test
+    public void withDrawTest() {
+        Client client = singUpService.register("withdraw", "l");
+        depositeService.deposite(client, 100L, client.getAccountsId().get(0));
+        double res = withdrawService.withdraw(client, 120L, client.getAccountsId().get(0));
+        assertEquals(100L, res);
+        Client client1 = clientRepository.getById(client.getId());
+        assertEquals(0L, client1.getAccount(client1.getAccountsId().get(0)).getBalance());
+    }
+
+
+}

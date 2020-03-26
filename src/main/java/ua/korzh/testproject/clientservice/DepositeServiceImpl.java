@@ -1,0 +1,32 @@
+package ua.korzh.testproject.clientservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import ua.korzh.testproject.accountservice.AccountService;
+import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.Client;
+import ua.korzh.testproject.repository.AcountRepository;
+import ua.korzh.testproject.repository.ClientRepository;
+
+@Service
+public class DepositeServiceImpl implements DepositeService {
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private AcountRepository acountRepository;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public boolean deposite(Client client, long money, int accountId) {
+        if (client != null && money >= 0){
+            Account account = acountRepository.getById(accountId);
+            accountService.addMoney(account, money);
+            return true;
+        }
+        return false;
+    }
+}
