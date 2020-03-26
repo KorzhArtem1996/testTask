@@ -21,8 +21,8 @@ public class DepositeServiceImpl implements DepositeService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public boolean deposite(Client client, long money, int accountId) {
-        if (client != null && money >= 0){
+    public boolean deposite(long money, int accountId) {
+        if (money >= 0 && accountId >= 0){
             Account account = acountRepository.getById(accountId);
             accountService.addMoney(account, money);
             return true;

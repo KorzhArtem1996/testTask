@@ -43,13 +43,13 @@ public class RestController {
     @PutMapping("/clients/{id}/deposite")
     public Boolean deposite(@PathVariable int id, @RequestParam Long money, @RequestParam int accountId) {
         Client client = clientService.getById(id);
-        return depositeService.deposite(client, money, accountId);
+        return depositeService.deposite(money, accountId);
     }
 
     @PutMapping("/clients/{id}/withdraw")
     public Long withdraw(@PathVariable int id, @RequestParam Long sum, int accountId) {
         Client client = clientService.getById(id);
-        return withdrawService.withdraw(client, sum, accountId);
+        return withdrawService.withdraw(sum, accountId);
     }
 
     @GetMapping("/clients/{id}/balance")

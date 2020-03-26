@@ -70,7 +70,7 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(eq(client), anyLong(), anyInt())).willReturn(false, true);
+        given(depositeService.deposite(anyLong(), anyInt())).willReturn(false, true);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
@@ -87,7 +87,7 @@ public class RestControllerTest {
     public void withdrawMoneyTest() throws Exception {
         Client client = new Client("withdraw", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(withdrawService.withdraw(eq(client), anyLong(), anyInt())).willReturn(100L);
+        given(withdrawService.withdraw( anyLong(), anyInt())).willReturn(100L);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(

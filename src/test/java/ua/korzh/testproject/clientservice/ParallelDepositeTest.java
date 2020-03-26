@@ -28,10 +28,10 @@ public class ParallelDepositeTest {
         Client client = singUpService.register("parallel", "deposite");
         Client client1 = clientRepository.getById(client.getId());
         doAnswer(invocationOnMock -> {
-            depositeService.deposite(client1, 19L, client1.getAccountsId().get(0));
+            depositeService.deposite(19L, client1.getAccountsId().get(0));
             Object res = invocationOnMock.callRealMethod();
             return res;
         }).when(accountService).addMoney(any(), eq(5L));
-        assertThrows(ObjectOptimisticLockingFailureException.class, () -> depositeService.deposite(client1, 5L, client1.getAccountsId().get(0)));
+        assertThrows(ObjectOptimisticLockingFailureException.class, () -> depositeService.deposite(5L, client1.getAccountsId().get(0)));
     }
 }

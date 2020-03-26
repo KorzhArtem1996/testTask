@@ -22,8 +22,8 @@ public class WithdrawServiceImpl implements WithdrawService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
-    public long withdraw(Client client, long sum, int accountId) {
-        if (client != null) {
+    public long withdraw(long sum, int accountId) {
+        if (sum >= 0 && accountId >= 0) {
             Account account = acountRepository.getById(accountId);
             return accountService.withDrawMoney(account, sum);
         }
