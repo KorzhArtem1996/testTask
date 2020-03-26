@@ -2,6 +2,8 @@ package ua.korzh.testTask.clientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testTask.accountService.AccountService;
 import ua.korzh.testTask.exception.EmailExistsException;
 import ua.korzh.testTask.model.Account;
@@ -23,6 +25,7 @@ public class SingUpServiceImpl implements SingUpService {
 
     private static Set<String> emails = new HashSet<>();
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public Client register(String email, String password) {
         if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
         emails.add(email);
