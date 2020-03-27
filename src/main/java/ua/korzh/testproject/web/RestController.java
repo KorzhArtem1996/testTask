@@ -14,14 +14,6 @@ import java.util.Optional;
 public class RestController {
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private SingUpService singUpService;
-    @Autowired
-    private DepositeService depositeService;
-    @Autowired
-    private WithdrawService withdrawService;
-    @Autowired
-    private CheckBalanceService checkBalanceService;
 
     @GetMapping("/clients")
     public List<Client> getAll() {
@@ -33,7 +25,7 @@ public class RestController {
         Client client;
         Optional<Client> opt;
         try {
-             client = singUpService.register(email, password);
+             client = clientService.register(email, password);
              opt = Optional.ofNullable(client);
         } catch (EmailExistsException e) {
             opt = Optional.empty();
@@ -44,18 +36,18 @@ public class RestController {
     @PutMapping("/clients/{id}/deposite")
     public Account deposite(@PathVariable int id, @RequestParam Long money, @RequestParam int accountId) {
         Client client = clientService.getById(id);
-        return depositeService.deposite(money, accountId);
+        return clientService.deposite(money, accountId);
     }
 
     @PutMapping("/clients/{id}/withdraw")
     public Account withdraw(@PathVariable int id, @RequestParam Long sum, int accountId) {
         Client client = clientService.getById(id);
-        return withdrawService.withdraw(sum, accountId);
+        return clientService.withdraw(sum, accountId);
     }
 
     @GetMapping("/clients/{id}/balance")
     public CheckBalanceService.Balance checkBalance(@PathVariable int id, int accountId) {
         Client client = clientService.getById(id);
-        return checkBalanceService.checkBalance(accountId);
+        return clientService.checkBalance(accountId);
     }
 }
