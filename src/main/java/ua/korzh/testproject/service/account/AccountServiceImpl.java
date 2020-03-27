@@ -13,7 +13,7 @@ public class AccountServiceImpl implements AccountService {
     private AcountRepository acountRepository;
     @Override
     public Account create(long balance, Client client) {
-        Account account = new Account(balance);
+        Account account = new Account(balance, client.getAccountsId().size());
         account.setClient(client);
         acountRepository.saveAndFlush(account);
         return account;

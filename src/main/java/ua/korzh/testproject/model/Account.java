@@ -1,5 +1,7 @@
 package ua.korzh.testproject.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,11 +14,14 @@ public class Account {
     private long balance;
     @Version
     private long version;
+    @Column(name = "NATURAL_ID")
+    private  int naturalId;
 
     public Account() {}
 
-    public Account(long balance) {
+    public Account(long balance, int naturalId) {
         this.balance = balance;
+        this.naturalId = naturalId;
     }
 
     public int getId() {return id;}
@@ -55,14 +60,13 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id &&
-                balance == account.balance &&
-                version == account.version &&
+        return balance == account.balance &&
+                naturalId == account.naturalId &&
                 client.equals(account.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, balance, version, client);
+        return Objects.hash(balance, naturalId, client);
     }
 }
