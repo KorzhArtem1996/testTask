@@ -3,7 +3,7 @@ package ua.korzh.testproject.service.client;
 import ua.korzh.testproject.model.Client;
 
 public interface CheckBalanceService {
-    public Balance checkBalance(Client client, int accountId);
+    public Balance checkBalance(int accountId);
     public static class Balance {
         private final long balance;
         private final Client client;

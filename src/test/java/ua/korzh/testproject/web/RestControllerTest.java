@@ -71,17 +71,21 @@ public class RestControllerTest {
     public void depositeMoneyTest() throws Exception {
         Client client = new Client("deposite", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(depositeService.deposite(anyLong(), anyInt())).willReturn(false, true);
+        Account account1 = new Account();
+        account1.setBalance(100L);
+        Account account2 = new Account();
+        account2.setBalance(200L);
+        given(depositeService.deposite(anyLong(), anyInt())).willReturn(account1, account2);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
                 put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(false)));
+                .andExpect(content().string(mapper.writeValueAsString(account1)));
         this.mockMvc.perform(
                 put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(true)));
+                .andExpect(content().string(mapper.writeValueAsString(account2)));
     }
 
     @Test
@@ -102,7 +106,7 @@ public class RestControllerTest {
         Client client = new Client("check", "balance");
         client.addAccount(new Account());
         ObjectMapper mapper = new ObjectMapper();
-        given(checkBalanceService.checkBalance(eq(client), anyInt())).willReturn(new CheckBalanceService.Balance(client, 500L));
+        given(checkBalanceService.checkBalance(anyInt())).willReturn(new CheckBalanceService.Balance(client, 500L));
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(

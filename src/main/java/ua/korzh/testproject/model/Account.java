@@ -37,6 +37,10 @@ public class Account {
         this.client = client;
     }
 
+    public Client getClient() {
+        return this.client;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -52,11 +56,13 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return id == account.id &&
-                balance == account.balance;
+                balance == account.balance &&
+                version == account.version &&
+                client.equals(account.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, balance);
+        return Objects.hash(id, balance, version, client);
     }
 }

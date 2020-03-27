@@ -3,6 +3,7 @@ package ua.korzh.testproject.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
+import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
 
@@ -41,7 +42,7 @@ public class RestController {
     }
 
     @PutMapping("/clients/{id}/deposite")
-    public Boolean deposite(@PathVariable int id, @RequestParam Long money, @RequestParam int accountId) {
+    public Account deposite(@PathVariable int id, @RequestParam Long money, @RequestParam int accountId) {
         Client client = clientService.getById(id);
         return depositeService.deposite(money, accountId);
     }
@@ -55,6 +56,6 @@ public class RestController {
     @GetMapping("/clients/{id}/balance")
     public CheckBalanceService.Balance checkBalance(@PathVariable int id, int accountId) {
         Client client = clientService.getById(id);
-        return checkBalanceService.checkBalance(client, accountId);
+        return checkBalanceService.checkBalance(accountId);
     }
 }
