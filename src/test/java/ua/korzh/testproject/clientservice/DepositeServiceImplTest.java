@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
+import ua.korzh.testproject.service.client.DepositeService;
+import ua.korzh.testproject.service.client.SingUpService;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest

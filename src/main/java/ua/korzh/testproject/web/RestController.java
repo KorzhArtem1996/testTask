@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.clientservice.*;
+import ua.korzh.testproject.service.client.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class RestController {
     @Autowired
     private WithdrawService withdrawService;
     @Autowired
-    private  CheckBalanceService checkBalanceService;
+    private CheckBalanceService checkBalanceService;
 
     @GetMapping("/clients")
     public List<Client> getAll() {

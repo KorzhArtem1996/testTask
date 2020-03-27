@@ -1,4 +1,4 @@
-package ua.korzh.testproject.clientservice;
+package ua.korzh.testproject.service.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

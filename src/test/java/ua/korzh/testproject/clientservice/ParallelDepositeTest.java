@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import ua.korzh.testproject.accountservice.AccountServiceImpl;
+import ua.korzh.testproject.service.account.AccountServiceImpl;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
+import ua.korzh.testproject.service.client.DepositeService;
+import ua.korzh.testproject.service.client.SingUpService;
 
 @SpringBootTest
 public class ParallelDepositeTest {

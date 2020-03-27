@@ -1,10 +1,10 @@
-package ua.korzh.testproject.clientservice;
+package ua.korzh.testproject.service.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ua.korzh.testproject.accountservice.AccountService;
+import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;

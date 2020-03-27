@@ -1,4 +1,4 @@
-package ua.korzh.testproject.accountservice;
+package ua.korzh.testproject.service.account;
 
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;

@@ -1,4 +1,4 @@
-package ua.korzh.testproject.clientservice;
+package ua.korzh.testproject.service.client;
 
 import org.springframework.stereotype.Service;
 import ua.korzh.testproject.model.Client;

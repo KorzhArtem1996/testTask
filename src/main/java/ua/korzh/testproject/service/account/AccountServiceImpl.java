@@ -1,10 +1,11 @@
-package ua.korzh.testproject.accountservice;
+package ua.korzh.testproject.service.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AcountRepository;
+import ua.korzh.testproject.service.account.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
