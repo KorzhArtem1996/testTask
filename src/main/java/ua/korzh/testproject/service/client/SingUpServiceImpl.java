@@ -11,6 +11,7 @@ import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Service

@@ -68,12 +68,11 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id &&
-                email.equals(client.email) && password.equals(client.password);
+        return email.equals(client.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password);
+        return Objects.hash(email);
     }
 }
