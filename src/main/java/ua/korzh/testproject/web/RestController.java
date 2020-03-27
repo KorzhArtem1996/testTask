@@ -48,7 +48,7 @@ public class RestController {
     }
 
     @PutMapping("/clients/{id}/withdraw")
-    public Long withdraw(@PathVariable int id, @RequestParam Long sum, int accountId) {
+    public Account withdraw(@PathVariable int id, @RequestParam Long sum, int accountId) {
         Client client = clientService.getById(id);
         return withdrawService.withdraw(sum, accountId);
     }

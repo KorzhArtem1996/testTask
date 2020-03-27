@@ -92,13 +92,15 @@ public class RestControllerTest {
     public void withdrawMoneyTest() throws Exception {
         Client client = new Client("withdraw", "money");
         ObjectMapper mapper = new ObjectMapper();
-        given(withdrawService.withdraw( anyLong(), anyInt())).willReturn(100L);
+        Account account = new Account();
+        account.setBalance(100L);
+        given(withdrawService.withdraw( anyLong(), anyInt())).willReturn(account);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
                 put("/clients/5/withdraw?sum=100&accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(100L)));
+                .andExpect(content().string(mapper.writeValueAsString(account)));
     }
 
     @Test
