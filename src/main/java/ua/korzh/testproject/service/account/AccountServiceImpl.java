@@ -77,18 +77,7 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    private static Set<String> emails = new HashSet<>();
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
-    public Client register(String email, String password) {
-        if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
-        emails.add(email);
-        Client client = new Client(email, password);
-        clientRepository.saveAndFlush(client);
-        Account account = create(0, client);
-        client.addAccount(account);
-        return client;
-    }
+
 
     @Override
     public AccountService.Balance checkBalance(int accountId) {

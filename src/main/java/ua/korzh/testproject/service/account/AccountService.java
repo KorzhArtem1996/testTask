@@ -14,8 +14,6 @@ public interface AccountService {
 
     public Account withdraw(long sum, int accountId);
 
-    Client register(String email, String password);
-
     public AccountService.Balance checkBalance(int accountId);
     public static class Balance {
         private final long balance;
