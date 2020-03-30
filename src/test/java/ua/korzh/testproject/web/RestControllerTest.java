@@ -13,7 +13,6 @@ import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import java.util.List;

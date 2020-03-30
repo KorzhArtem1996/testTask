@@ -5,28 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
-import ua.korzh.testproject.service.client.DepositeService;
-import ua.korzh.testproject.service.client.SingUpService;
+import ua.korzh.testproject.service.client.ClientService;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DepositeServiceImplTest {
     @Autowired
-    private SingUpService singUpService;
-    @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    private DepositeService depositeService;
-
+    private ClientService clientService;
     @Test
     public void depositeTest() {
-        Client client = singUpService.register("deposite", "s");
+        Client client = clientService.register("deposite", "s");
         Account account = client.getAccount(client.getAccountsId().get(0));
         assertNotNull(account);
         assertEquals(0L, account.getBalance());
-        depositeService.deposite( 500L, client.getAccountsId().get(0));
+        clientService.deposite( 500L, client.getAccountsId().get(0));
         Client client1 = clientRepository.getById(client.getId());
         assertEquals(500L, client1.getAccount(client1.getAccountsId().get(0)).getBalance());
     }

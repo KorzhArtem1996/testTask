@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
+import ua.korzh.testproject.service.account.AccountService;
 
 import java.util.List;
 @Service
@@ -12,11 +13,7 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    private SingUpService singUpService;
-    @Autowired
-    private DepositeService depositeService;
-    @Autowired
-    private WithdrawService withdrawService;
+    private AccountService accountService;
     @Autowired
     private CheckBalanceService checkBalanceService;
 
@@ -32,17 +29,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client register(String email, String password) {
-        return singUpService.register(email, password);
+        return accountService.register(email, password);
     }
 
     @Override
     public Account deposite(long money, int accountId) {
-        return depositeService.deposite(money, accountId);
+        return accountService.deposite(money, accountId);
     }
 
     @Override
     public Account withdraw(long sum, int accountId) {
-        return withdrawService.withdraw(sum, accountId);
+        return accountService.withdraw(sum, accountId);
     }
 
     @Override

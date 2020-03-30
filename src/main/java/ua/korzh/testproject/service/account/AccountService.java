@@ -9,4 +9,10 @@ public interface AccountService {
     public boolean addMoney(Account account, long balance);
 
     public long withDrawMoney(Account account, long sum);
+
+    public Account deposite(long money, int accountId);
+
+    public Account withdraw(long sum, int accountId);
+
+    Client register(String email, String password);
 }
