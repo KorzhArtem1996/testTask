@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ua.korzh.testproject.exception.AccountNotExistException;
-import ua.korzh.testproject.exception.EmailExistsException;
-import ua.korzh.testproject.exception.NegativeAccountIdException;
-import ua.korzh.testproject.exception.NegativeSumException;
+import ua.korzh.testproject.exception.*;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AcountRepository;
@@ -31,28 +28,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean addMoney(Account account, long balance) {
-        if (account != null) {
+    public void addMoney(Account account, long balance) {
             account.setBalance(account.getBalance() + balance);
             acountRepository.saveAndFlush(account);
-            return true;
-        }
-        return false;
     }
 
     @Override
-    public long withDrawMoney(Account account, long sum) {
-        if (account == null) return -1;
-        long res = sum;
+    public void withDrawMoney(Account account, long sum) {
         if (sum <= account.getBalance()) {
             account.setBalance(account.getBalance() - sum);
+            acountRepository.saveAndFlush(account);
 
         } else {
-            res = account.getBalance();
-            account.setBalance(0L);
+            throw new NotEnoughMoney("You do not have enough money! Balance: " + account.getBalance());
         }
-        acountRepository.saveAndFlush(account);
-        return res;
     }
 
     @Override
@@ -61,8 +50,8 @@ public class AccountServiceImpl implements AccountService {
         if (money < 0) throw new NegativeSumException("Sum of money must be positive");
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
-        boolean res = addMoney(account, money);
-        if (res == false) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        addMoney(account, money);
         return account;
     }
 
