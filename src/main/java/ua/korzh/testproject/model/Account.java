@@ -3,18 +3,25 @@ package ua.korzh.testproject.model;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Entity(name = "account")
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "BALANCE")
+    @NotNull
+    @Min(0)
     private long balance;
     @Version
     private long version;
     @Column(name = "NATURAL_ID")
+    @NotNull
+    @Min(0)
     private  int naturalId;
 
     public Account() {}
@@ -35,7 +42,7 @@ public class Account {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client")
+    @JoinColumn(name = "CLIENT")
     private Client client;
 
     public void setClient(Client client) {
