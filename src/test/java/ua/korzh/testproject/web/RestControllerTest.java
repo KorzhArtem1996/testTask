@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
+import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -99,12 +100,12 @@ public class RestControllerTest {
         Client client = new Client("check", "balance");
         client.addAccount(new Account());
         ObjectMapper mapper = new ObjectMapper();
-        given(clientService.checkBalance(anyInt())).willReturn(new CheckBalanceService.Balance(client, 500L));
+        given(clientService.checkBalance(anyInt())).willReturn(new AccountService.Balance(client, 500L));
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
                 get("/clients/3/balance?accountId=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(new CheckBalanceService.Balance(client, 500L))));
+                .andExpect(content().string(mapper.writeValueAsString(new AccountService.Balance(client, 500L))));
     }
 }

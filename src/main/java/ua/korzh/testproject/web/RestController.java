@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
+import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class RestController {
     }
 
     @GetMapping("/clients/{id}/balance")
-    public CheckBalanceService.Balance checkBalance(@PathVariable int id, int accountId) {
+    public AccountService.Balance checkBalance(@PathVariable int id, int accountId) {
         Client client = clientService.getById(id);
         return clientService.checkBalance(accountId);
     }

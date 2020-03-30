@@ -12,7 +12,6 @@ import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
-import ua.korzh.testproject.service.account.AccountService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -89,6 +88,16 @@ public class AccountServiceImpl implements AccountService {
         Account account = create(0, client);
         client.addAccount(account);
         return client;
+    }
+
+    @Override
+    public AccountService.Balance checkBalance(int accountId) {
+        if (accountId >= 0) {
+            Account account = acountRepository.getById(accountId);
+            long bal = account.getBalance();
+            return new AccountService.Balance(account.getClient(), bal);
+        }
+        return null;
     }
 
 }

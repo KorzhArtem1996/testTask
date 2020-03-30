@@ -14,8 +14,6 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private CheckBalanceService checkBalanceService;
 
     @Override
     public List<Client> getAll() {
@@ -43,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public CheckBalanceService.Balance checkBalance(int accountId) {
-        return checkBalanceService.checkBalance(accountId);
+    public AccountService.Balance checkBalance(int accountId) {
+        return accountService.checkBalance(accountId);
     }
 }

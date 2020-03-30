@@ -15,4 +15,25 @@ public interface AccountService {
     public Account withdraw(long sum, int accountId);
 
     Client register(String email, String password);
+
+    public AccountService.Balance checkBalance(int accountId);
+    public static class Balance {
+        private final long balance;
+        private final Client client;
+
+        public Balance(Client client, long balance) {
+            this.client = client;
+            this.balance = balance;
+        }
+        public long getBalance() {
+            return balance;
+        }
+        public Client getClient() {
+            return new Client(client);
+        }
+        @Override
+        public String toString() {
+            return "Client " + client.getEmail() + " has balance " + balance;
+        }
+    }
 }
