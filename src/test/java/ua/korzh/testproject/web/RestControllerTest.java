@@ -71,11 +71,11 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/deposite/accounts/1?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account1)));
         this.mockMvc.perform(
-                put("/clients/1/deposite?money=500&accountId=1").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/deposite/accounts/1?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account2)));
     }
@@ -90,7 +90,7 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/5/withdraw?sum=100&accountId=1").accept(MediaType.APPLICATION_JSON))
+                put("/clients/5/withdraw/accounts/1?sum=100").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account)));
     }
@@ -104,7 +104,7 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                get("/clients/3/balance?accountId=1").accept(MediaType.APPLICATION_JSON))
+                get("/clients/3/balance/accounts/1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(new AccountService.Balance(client, 500L))));
     }
