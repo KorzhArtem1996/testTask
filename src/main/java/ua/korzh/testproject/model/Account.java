@@ -1,6 +1,7 @@
 package ua.korzh.testproject.model;
 
 import org.hibernate.annotations.NaturalId;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -15,6 +16,7 @@ public class Account {
     private int id;
     @Column(name = "BALANCE", nullable = false)
     @Min(0)
+    @Value("${account.default.balance}")
     private long balance;
     @Version
     private long version;
@@ -24,8 +26,7 @@ public class Account {
 
     public Account() {}
 
-    public Account(long balance, int naturalId) {
-        this.balance = balance;
+    public Account(int naturalId) {
         this.naturalId = naturalId;
     }
 

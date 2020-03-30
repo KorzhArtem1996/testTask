@@ -4,7 +4,7 @@ import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 
 public interface AccountService {
-    public Account create(long balance, Client client);
+    public Account create(Client client);
 
     public void addMoney(Account account, long balance);
 

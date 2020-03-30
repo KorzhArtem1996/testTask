@@ -20,8 +20,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private ClientRepository clientRepository;
     @Override
-    public Account create(long balance, Client client) {
-        Account account = new Account(balance, client.getAccountsId().size());
+    public Account create(Client client) {
+        Account account = new Account(client.getAccountsId().size());
         account.setClient(client);
         acountRepository.saveAndFlush(account);
         return account;

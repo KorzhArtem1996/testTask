@@ -39,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
         emails.add(email);
         Client client = new Client(email, password);
         clientRepository.saveAndFlush(client);
-        Account account = accountService.create(0, client);
+        Account account = accountService.create(client);
         client.addAccount(account);
         return client;
     }
