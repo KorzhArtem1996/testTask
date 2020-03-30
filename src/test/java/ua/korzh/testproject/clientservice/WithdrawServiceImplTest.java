@@ -19,7 +19,7 @@ class WithdrawServiceImplTest {
 
     @Test
     public void withDrawTest() {
-        Client client = clientService.register("withdraw", "l");
+        Client client = clientService.register("withdraw", "lllll");
         clientService.deposite(100L, client.getAccountsId().get(0));
         Exception exception = assertThrows(NotEnoughMoney.class, () -> {
             Account res = clientService.withdraw(120L, client.getAccountsId().get(0));

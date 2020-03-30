@@ -17,7 +17,7 @@ class DepositeServiceImplTest {
     private ClientService clientService;
     @Test
     public void depositeTest() {
-        Client client = clientService.register("deposite", "s");
+        Client client = clientService.register("deposite", "ssss");
         Account account = client.getAccount(client.getAccountsId().get(0));
         assertNotNull(account);
         assertEquals(0L, account.getBalance());

@@ -13,14 +13,12 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "BALANCE")
-    @NotNull
+    @Column(name = "BALANCE", nullable = false)
     @Min(0)
     private long balance;
     @Version
     private long version;
-    @Column(name = "NATURAL_ID")
-    @NotNull
+    @Column(name = "NATURAL_ID", nullable = false)
     @Min(0)
     private  int naturalId;
 

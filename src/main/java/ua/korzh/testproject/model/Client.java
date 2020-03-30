@@ -1,16 +1,19 @@
 package ua.korzh.testproject.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.*;
 
-@Entity(name = "client")
+@Entity
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true, nullable = false)
+    @Size(min = 4)
     private String email;
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false)
+    @Size(min = 4)
     private String password;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();

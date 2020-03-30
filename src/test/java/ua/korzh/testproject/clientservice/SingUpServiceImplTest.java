@@ -19,8 +19,8 @@ class SingUpServiceImplTest {
 
     @Test
     public void registerTest() {
-        Client artem = clientService.register("artem", "1");
-        Client korzh = clientService.register("korzh", "2");
+        Client artem = clientService.register("artem", "1234");
+        Client korzh = clientService.register("korzh", "5678");
         assertNotNull(korzh);
         assertNotEquals(artem, korzh);
         List<Client> list = clientRepository.findAll();
