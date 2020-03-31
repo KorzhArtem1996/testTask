@@ -3,6 +3,7 @@ package ua.korzh.testproject.clientservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
@@ -15,7 +16,9 @@ class DepositeServiceImplTest {
     private ClientRepository clientRepository;
     @Autowired
     private ClientService clientService;
+
     @Test
+    @Transactional
     public void depositeTest() {
         Client client = clientService.register("deposite", "ssss");
         Account account = client.getAccount(client.getAccountsId().get(0));

@@ -3,6 +3,7 @@ package ua.korzh.testproject.clientservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
@@ -20,6 +21,7 @@ class CheckBalanceServiceImplTest {
     private AccountService accountService;
 
     @Test
+    @Transactional
     public void checkBalance() {
         Client client = clientService.register("check", "cccc");
         clientService.deposite(500L, client.getAccountsId().get(0));

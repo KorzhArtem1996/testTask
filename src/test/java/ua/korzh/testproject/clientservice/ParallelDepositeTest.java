@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.service.account.AccountServiceImpl;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
@@ -21,7 +22,9 @@ public class ParallelDepositeTest {
     private AccountServiceImpl accountService;
     @Autowired
     private ClientService clientService;
+
     @Test
+    @Transactional
     public void parallelDepositeTest() {
         Client client = clientService.register("parallel", "deposite");
         Client client1 = clientRepository.getById(client.getId());
