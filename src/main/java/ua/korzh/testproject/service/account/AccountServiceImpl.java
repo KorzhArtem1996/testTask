@@ -1,6 +1,7 @@
 package ua.korzh.testproject.service.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,11 @@ public class AccountServiceImpl implements AccountService {
     private AcountRepository acountRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Value("${account.default.balance}")
+    private long defaultBalance;
     @Override
     public Account create(Client client) {
-        Account account = new Account(client.getAccountsId().size());
+        Account account = new Account(client.getAccountsId().size(), defaultBalance);
         account.setClient(client);
         acountRepository.saveAndFlush(account);
         return account;

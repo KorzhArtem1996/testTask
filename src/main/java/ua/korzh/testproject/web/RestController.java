@@ -34,19 +34,19 @@ public class RestController {
         return opt;
     }
 
-    @PutMapping("/clients/{clientId}/deposite/accounts/{accountId}")
-    public Account deposite(@PathVariable int clientId, @RequestParam Long money, @PathVariable int accountId) {
+    @PutMapping("/clients/{clientId}/accounts/{accountId}/deposit")
+    public Account deposit(@PathVariable int clientId, @RequestParam Long money, @PathVariable int accountId) {
         Client client = clientService.getById(clientId);
         return clientService.deposite(money, accountId);
     }
 
-    @PutMapping("/clients/{clientId}/withdraw/accounts/{accountId}")
+    @PutMapping("/clients/{clientId}/accounts/{accountId}/withdraw")
     public Account withdraw(@PathVariable int clientId, @RequestParam Long sum, @PathVariable int accountId) {
         Client client = clientService.getById(clientId);
         return clientService.withdraw(sum, accountId);
     }
 
-    @GetMapping("/clients/{clientId}/balance/accounts/{accountId}")
+    @GetMapping("/clients/{clientId}/accounts/{accountId}/balance")
     public AccountService.Balance checkBalance(@PathVariable int clientId, @PathVariable int accountId) {
         Client client = clientService.getById(clientId);
         return clientService.checkBalance(accountId);

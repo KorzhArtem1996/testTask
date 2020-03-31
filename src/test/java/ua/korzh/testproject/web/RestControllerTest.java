@@ -60,8 +60,8 @@ public class RestControllerTest {
     }
 
     @Test
-    public void depositeMoneyTest() throws Exception {
-        Client client = new Client("deposite", "money");
+    public void depositMoneyTest() throws Exception {
+        Client client = new Client("deposit", "money");
         ObjectMapper mapper = new ObjectMapper();
         Account account1 = new Account();
         account1.setBalance(100L);
@@ -71,11 +71,11 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/1/deposite/accounts/1?money=500").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account1)));
         this.mockMvc.perform(
-                put("/clients/1/deposite/accounts/1?money=500").accept(MediaType.APPLICATION_JSON))
+                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account2)));
     }
@@ -90,7 +90,7 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                put("/clients/5/withdraw/accounts/1?sum=100").accept(MediaType.APPLICATION_JSON))
+                put("/clients/5/accounts/1/withdraw?sum=100").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(account)));
     }
@@ -104,7 +104,7 @@ public class RestControllerTest {
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
-                get("/clients/3/balance/accounts/1").accept(MediaType.APPLICATION_JSON))
+                get("/clients/3/accounts/1/balance").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(new AccountService.Balance(client, 500L))));
     }

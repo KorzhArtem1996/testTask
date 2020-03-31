@@ -16,7 +16,6 @@ public class Account {
     private int id;
     @Column(name = "BALANCE", nullable = false)
     @Min(0)
-    @Value("${account.default.balance}")
     private long balance;
     @Version
     private long version;
@@ -26,8 +25,9 @@ public class Account {
 
     public Account() {}
 
-    public Account(int naturalId) {
+    public Account(int naturalId, long balance) {
         this.naturalId = naturalId;
+        this.balance = balance;
     }
 
     public int getId() {return id;}
