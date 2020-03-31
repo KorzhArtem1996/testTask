@@ -1,5 +1,6 @@
 package ua.korzh.testproject.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,8 @@ import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -107,5 +110,17 @@ public class RestControllerTest {
                 get("/clients/3/accounts/1/balance").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(mapper.writeValueAsString(500L)));
+    }
+
+    @Test
+    public void showHistoryTest() throws Exception {
+        Client client = new Client("show", "history");
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> list = Arrays.asList("Deposit: 100", "Deposit: 200", "Deposit: 300");
+        given(clientService.showAccountHistory(anyInt())).willReturn(list);
+
+        this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(list)));
     }
 }
