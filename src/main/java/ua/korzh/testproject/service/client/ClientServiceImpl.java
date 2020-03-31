@@ -58,4 +58,9 @@ public class ClientServiceImpl implements ClientService {
     public long checkBalance(int accountId) {
         return accountService.checkBalance(accountId);
     }
+
+    @Override
+    public List<String> showAccountHistory(int accountId) {
+        return accountService.history(accountId);
+    }
 }

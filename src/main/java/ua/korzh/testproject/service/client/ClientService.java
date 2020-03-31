@@ -13,4 +13,5 @@ public interface ClientService {
     Account deposite(long money, int accountId);
     Account withdraw(long sum, int accountId);
     long checkBalance(int accountId);
+    List<String> showAccountHistory(int accountId);
 }

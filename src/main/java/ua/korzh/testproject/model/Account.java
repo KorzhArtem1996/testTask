@@ -66,13 +66,12 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return balance == account.balance &&
-                naturalId == account.naturalId &&
+        return naturalId == account.naturalId &&
                 client.equals(account.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(balance, naturalId, client);
+        return Objects.hash(naturalId, client);
     }
 }
