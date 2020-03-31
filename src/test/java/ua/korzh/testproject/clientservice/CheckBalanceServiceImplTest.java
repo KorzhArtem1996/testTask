@@ -24,7 +24,7 @@ class CheckBalanceServiceImplTest {
         Client client = clientService.register("check", "cccc");
         clientService.deposite(500L, client.getAccountsId().get(0));
         Client client1 = clientRepository.getById(client.getId());
-        AccountService.Balance balance = accountService.checkBalance(client1.getAccountsId().get(0));
-        assertEquals(500L, balance.getBalance());
+        long balance = accountService.checkBalance(client1.getAccountsId().get(0));
+        assertEquals(500L, balance);
     }
 }

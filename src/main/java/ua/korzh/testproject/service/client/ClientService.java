@@ -12,5 +12,5 @@ public interface ClientService {
     Client register(String email, String password);
     Account deposite(long money, int accountId);
     Account withdraw(long sum, int accountId);
-    AccountService.Balance checkBalance(int accountId);
+    long checkBalance(int accountId);
 }

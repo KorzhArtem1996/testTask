@@ -55,7 +55,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public AccountService.Balance checkBalance(int accountId) {
+    public long checkBalance(int accountId) {
         return accountService.checkBalance(accountId);
     }
 }

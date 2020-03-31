@@ -72,13 +72,12 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AccountService.Balance checkBalance(int accountId) {
-        if (accountId >= 0) {
-            Account account = acountRepository.getById(accountId);
-            long bal = account.getBalance();
-            return new AccountService.Balance(account.getClient(), bal);
-        }
-        return null;
+    public long checkBalance(int accountId) {
+        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        Account account = acountRepository.getById(accountId);
+        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        long bal = account.getBalance();
+            return bal;
     }
 
 }

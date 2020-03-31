@@ -47,7 +47,7 @@ public class RestController {
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/balance")
-    public AccountService.Balance checkBalance(@PathVariable int clientId, @PathVariable int accountId) {
+    public long checkBalance(@PathVariable int clientId, @PathVariable int accountId) {
         Client client = clientService.getById(clientId);
         return clientService.checkBalance(accountId);
     }
