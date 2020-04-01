@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
@@ -50,6 +50,17 @@ public class Account {
 
     public Client getClient() {
         return this.client;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
+    private List<AccountHistory> accountHistory = new ArrayList<>();
+
+    public void addAccountHistory(AccountHistory accountHistory) {
+        this.accountHistory.add(accountHistory);
+    }
+
+    public List<AccountHistory> getAccountHistory() {
+        return this.accountHistory;
     }
 
     @Override

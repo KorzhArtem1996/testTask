@@ -7,16 +7,22 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.*;
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.AccountHistory;
 import ua.korzh.testproject.model.Client;
+import ua.korzh.testproject.repository.AccountHistoryRepository;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AcountRepository acountRepository;
+    @Autowired
+    private AccountHistoryRepository accountHistoryRepository;
     @Autowired
     private ClientRepository clientRepository;
     @Value("${account.default.balance}")
@@ -29,27 +35,30 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    private static Map<Account, List<String>> accountsHistory = new HashMap<>();
+
     @Override
     public void addMoney(Account account, long balance) {
-            account.setBalance(account.getBalance() + balance);
-            acountRepository.saveAndFlush(account);
-            List<String> hsr = accountsHistory.get(account);
-            if (hsr == null) {
-                hsr = new ArrayList<>();
-            }
-            hsr.add("Deposit: " + balance);
-            accountsHistory.put(account, hsr);
+        AccountHistory accountHistory = new AccountHistory("Deposit: " + balance, LocalDateTime.now());
+        accountHistory.setBalanceBefore(account.getBalance());
+        accountHistory.setAccount(account);
+        account.setBalance(account.getBalance() + balance);
+        accountHistory.setBalanceAfter(account.getBalance());
+        accountHistoryRepository.saveAndFlush(accountHistory);
+        account.addAccountHistory(accountHistory);
+        acountRepository.saveAndFlush(account);
     }
 
     @Override
     public void withDrawMoney(Account account, long sum) {
         if (sum <= account.getBalance()) {
+            AccountHistory accountHistory = new AccountHistory("Withdraw: " + sum, LocalDateTime.now());
+            accountHistory.setBalanceBefore(account.getBalance());
+            accountHistory.setAccount(account);
             account.setBalance(account.getBalance() - sum);
+            accountHistory.setBalanceAfter(account.getBalance());
+            accountHistoryRepository.saveAndFlush(accountHistory);
+            account.addAccountHistory(accountHistory);
             acountRepository.saveAndFlush(account);
-            List<String> hsr = accountsHistory.getOrDefault(account, new ArrayList<>());
-            hsr.add("Withdraw: " + sum);
-            accountsHistory.put(account, hsr);
 
         } else {
             throw new NotEnoughMoney("You do not have enough money! Balance: " + account.getBalance());
@@ -78,8 +87,6 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-
-
     @Override
     public long checkBalance(int accountId) {
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
@@ -94,12 +101,9 @@ public class AccountServiceImpl implements AccountService {
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
         if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
-        List<String> res = accountsHistory.get(account);
-        if (res == null) {
-            res = new ArrayList<>();
-            res.add("Accounts history is empty");
-            return res;
-        }
+        List<String> res = account.getAccountHistory().stream()
+                .map(accountHistory -> "Operation: " + accountHistory.getOperationName() + ", was executed at: " + accountHistory.getLocalDateTime() )
+                .collect(Collectors.toList());
         return res;
     }
 }
