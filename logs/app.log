@@ -1,0 +1,80 @@
+2020-04-01 17:21:19,221 INFO ua.korzh.testproject.web.RestControllerTest [main] Starting RestControllerTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:19,222 DEBUG ua.korzh.testproject.web.RestControllerTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:19,224 INFO ua.korzh.testproject.web.RestControllerTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:21,139 INFO ua.korzh.testproject.web.RestControllerTest [main] Started RestControllerTest in 2.183 seconds (JVM running for 3.404)
+2020-04-01 17:21:21,442 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Starting SingUpServiceImplTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:21,442 DEBUG ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:21,442 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:22,196 INFO ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] Starting WithdrawServiceImplTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:22,196 DEBUG ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:22,197 INFO ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:22,612 INFO ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] Starting CheckBalanceServiceImplTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:22,612 DEBUG ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:22,612 INFO ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:23,021 INFO ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] Starting DepositeServiceImplTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:23,022 DEBUG ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:23,022 INFO ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:23,432 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Starting ParallelDepositeTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:23,432 DEBUG ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:23,432 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:21:23,761 INFO ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] Starting ShowAccountHistoryTest on desktop with PID 16264 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:21:23,761 DEBUG ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:21:23,762 INFO ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:22:25,437 INFO ua.korzh.testproject.web.RestControllerTest [main] Starting RestControllerTest on desktop with PID 16377 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:22:25,438 DEBUG ua.korzh.testproject.web.RestControllerTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:22:25,440 INFO ua.korzh.testproject.web.RestControllerTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:22:27,200 INFO ua.korzh.testproject.web.RestControllerTest [main] Started RestControllerTest in 2.063 seconds (JVM running for 3.253)
+2020-04-01 17:22:27,503 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Starting SingUpServiceImplTest on desktop with PID 16377 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:22:27,503 DEBUG ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:22:27,504 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:22:30,390 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Started SingUpServiceImplTest in 2.923 seconds (JVM running for 6.443)
+2020-04-01 17:22:30,830 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Starting ParallelDepositeTest on desktop with PID 16377 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:22:30,830 DEBUG ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:22:30,830 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:22:31,840 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Started ParallelDepositeTest in 1.031 seconds (JVM running for 7.892)
+2020-04-01 17:50:30,971 INFO ua.korzh.testproject.web.RestControllerTest [main] Starting RestControllerTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:30,972 DEBUG ua.korzh.testproject.web.RestControllerTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:30,975 INFO ua.korzh.testproject.web.RestControllerTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:32,763 INFO ua.korzh.testproject.web.RestControllerTest [main] Started RestControllerTest in 2.038 seconds (JVM running for 3.325)
+2020-04-01 17:50:33,099 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Starting SingUpServiceImplTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:33,099 DEBUG ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:33,100 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:33,903 INFO ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] Starting WithdrawServiceImplTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:33,903 DEBUG ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:33,904 INFO ua.korzh.testproject.clientservice.WithdrawServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:34,267 INFO ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] Starting CheckBalanceServiceImplTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:34,267 DEBUG ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:34,268 INFO ua.korzh.testproject.clientservice.CheckBalanceServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:34,600 INFO ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] Starting DepositeServiceImplTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:34,600 DEBUG ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:34,601 INFO ua.korzh.testproject.clientservice.DepositeServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:34,963 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Starting ParallelDepositeTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:34,963 DEBUG ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:34,963 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:50:35,299 INFO ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] Starting ShowAccountHistoryTest on desktop with PID 17370 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:50:35,299 DEBUG ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:50:35,299 INFO ua.korzh.testproject.clientservice.ShowAccountHistoryTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:53:33,803 INFO ua.korzh.testproject.web.RestControllerTest [main] Starting RestControllerTest on desktop with PID 17541 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:53:33,803 DEBUG ua.korzh.testproject.web.RestControllerTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:53:33,806 INFO ua.korzh.testproject.web.RestControllerTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:53:35,644 INFO ua.korzh.testproject.web.RestControllerTest [main] Started RestControllerTest in 2.1 seconds (JVM running for 3.329)
+2020-04-01 17:53:36,007 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Starting SingUpServiceImplTest on desktop with PID 17541 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:53:36,007 DEBUG ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:53:36,008 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:53:39,140 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Started SingUpServiceImplTest in 3.166 seconds (JVM running for 6.825)
+2020-04-01 17:53:39,555 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Starting ParallelDepositeTest on desktop with PID 17541 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:53:39,555 DEBUG ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:53:39,556 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:53:40,575 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Started ParallelDepositeTest in 1.044 seconds (JVM running for 8.26)
+2020-04-01 17:55:42,079 INFO ua.korzh.testproject.web.RestControllerTest [main] Starting RestControllerTest on desktop with PID 17725 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:55:42,079 DEBUG ua.korzh.testproject.web.RestControllerTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:55:42,081 INFO ua.korzh.testproject.web.RestControllerTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:55:43,881 INFO ua.korzh.testproject.web.RestControllerTest [main] Started RestControllerTest in 2.061 seconds (JVM running for 3.255)
+2020-04-01 17:55:44,213 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Starting SingUpServiceImplTest on desktop with PID 17725 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:55:44,213 DEBUG ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:55:44,214 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:55:47,559 INFO ua.korzh.testproject.clientservice.SingUpServiceImplTest [main] Started SingUpServiceImplTest in 3.379 seconds (JVM running for 6.933)
+2020-04-01 17:55:48,007 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Starting ParallelDepositeTest on desktop with PID 17725 (started by artem in /home/artem/Загрузки/KorzhTest)
+2020-04-01 17:55:48,008 DEBUG ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-04-01 17:55:48,008 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] No active profile set, falling back to default profiles: default
+2020-04-01 17:55:49,101 INFO ua.korzh.testproject.clientservice.ParallelDepositeTest [main] Started ParallelDepositeTest in 1.117 seconds (JVM running for 8.475)
