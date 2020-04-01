@@ -1,6 +1,5 @@
 package ua.korzh.testproject.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.AccountHistory;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -116,7 +114,7 @@ public class RestControllerTest {
     public void showHistoryTest() throws Exception {
         Client client = new Client("show", "history");
         ObjectMapper mapper = new ObjectMapper();
-        List<String> list = Arrays.asList("Deposit: 100", "Deposit: 200", "Deposit: 300");
+        List<AccountHistory> list = Arrays.asList(new AccountHistory("operation1"), new AccountHistory("operation2"), new AccountHistory("operation3"));
         given(clientService.showAccountHistory(anyInt())).willReturn(list);
 
         this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))

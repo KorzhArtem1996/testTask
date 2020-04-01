@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
+@Table(name = "ACCOUNT", uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package ua.korzh.testproject.service.client;
 
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.AccountHistory;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.account.AccountService;
 
@@ -13,5 +14,5 @@ public interface ClientService {
     Account deposite(long money, int accountId);
     Account withdraw(long sum, int accountId);
     long checkBalance(int accountId);
-    List<String> showAccountHistory(int accountId);
+    List<AccountHistory> showAccountHistory(int accountId);
 }

@@ -19,7 +19,6 @@ public class ShowAccountHistoryTest {
     @Autowired
     private AcountRepository acountRepository;
 
-
     @Test
     @Transactional
     public void showHistory() {
@@ -28,7 +27,7 @@ public class ShowAccountHistoryTest {
         clientService.deposite(30L, client.getAccountsId().get(0));
         clientService.withdraw(100L, client.getAccountsId().get(0));
 
-        assertEquals(3, clientService.showAccountHistory(client.getAccountsId().get(0)).size());
+        assertEquals("[AccountHistory{operationName='Deposit: 100', balanceBefore=0, balanceAfter=100, account=Account{id = 7, balance = 30, clients id =7}}, AccountHistory{operationName='Deposit: 30', balanceBefore=100, balanceAfter=130, account=Account{id = 7, balance = 30, clients id =7}}, AccountHistory{operationName='Withdraw: 100', balanceBefore=130, balanceAfter=30, account=Account{id = 7, balance = 30, clients id =7}}]", clientService.showAccountHistory(client.getAccountsId().get(0)).toString());
     }
 
 }

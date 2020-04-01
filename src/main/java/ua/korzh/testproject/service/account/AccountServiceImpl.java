@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addMoney(Account account, long balance) {
-        AccountHistory accountHistory = new AccountHistory("Deposit: " + balance, LocalDateTime.now());
+        AccountHistory accountHistory = new AccountHistory("Deposit: " + balance);
         accountHistory.setBalanceBefore(account.getBalance());
         accountHistory.setAccount(account);
         account.setBalance(account.getBalance() + balance);
@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void withDrawMoney(Account account, long sum) {
         if (sum <= account.getBalance()) {
-            AccountHistory accountHistory = new AccountHistory("Withdraw: " + sum, LocalDateTime.now());
+            AccountHistory accountHistory = new AccountHistory("Withdraw: " + sum);
             accountHistory.setBalanceBefore(account.getBalance());
             accountHistory.setAccount(account);
             account.setBalance(account.getBalance() - sum);
@@ -97,13 +97,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<String> history(int accountId) {
+    public List<AccountHistory> history(int accountId) {
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
         if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
-        List<String> res = account.getAccountHistory().stream()
-                .map(accountHistory -> "Operation: " + accountHistory.getOperationName() + ", was executed at: " + accountHistory.getLocalDateTime() )
-                .collect(Collectors.toList());
-        return res;
+        return account.getAccountHistory();
     }
 }

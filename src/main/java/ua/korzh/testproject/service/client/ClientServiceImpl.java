@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.AccountHistory;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
@@ -60,7 +61,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<String> showAccountHistory(int accountId) {
+    public List<AccountHistory> showAccountHistory(int accountId) {
         return accountService.history(accountId);
     }
 }
