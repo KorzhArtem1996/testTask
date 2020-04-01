@@ -30,10 +30,6 @@
         </encoder>
     </appender>
 
-    <logger name="ua.korzh.testproject" level="debug" additivity="false">
-
-    </logger>
-
     <root level="info">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE-ROLLING"/>
