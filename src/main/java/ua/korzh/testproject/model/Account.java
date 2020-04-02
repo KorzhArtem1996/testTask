@@ -1,11 +1,7 @@
 package ua.korzh.testproject.model;
 
-import org.hibernate.annotations.NaturalId;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity

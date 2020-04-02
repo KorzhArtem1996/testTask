@@ -29,7 +29,6 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    private static Map<Account, List<String>> accountsHistory = new HashMap<>();
     @Override
     public void addMoney(Account account, long balance) {
             account.setBalance(account.getBalance() + balance);
@@ -76,8 +75,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
         if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
-        long bal = account.getBalance();
-            return bal;
+        return account.getBalance();
     }
 
 }
