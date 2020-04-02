@@ -18,6 +18,4 @@ public interface AccountService {
 
     public long checkBalance(int accountId);
 
-    public List<String> history(int accountId);
-
 }

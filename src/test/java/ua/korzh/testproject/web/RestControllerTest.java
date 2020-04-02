@@ -1,6 +1,5 @@
 package ua.korzh.testproject.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -70,7 +68,7 @@ public class RestControllerTest {
         account1.setBalance(100L);
         Account account2 = new Account();
         account2.setBalance(200L);
-        given(clientService.deposite(anyLong(), anyInt())).willReturn(account1, account2);
+        given(clientService.deposit(anyLong(), anyInt())).willReturn(account1, account2);
         given(clientService.getById(anyInt())).willReturn(client);
 
         this.mockMvc.perform(
@@ -112,15 +110,4 @@ public class RestControllerTest {
                 .andExpect(content().string(mapper.writeValueAsString(500L)));
     }
 
-    @Test
-    public void showHistoryTest() throws Exception {
-        Client client = new Client("show", "history");
-        ObjectMapper mapper = new ObjectMapper();
-        List<String> list = Arrays.asList("Deposit: 100", "Deposit: 200", "Deposit: 300");
-        given(clientService.showAccountHistory(anyInt())).willReturn(list);
-
-        this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(list)));
-    }
 }

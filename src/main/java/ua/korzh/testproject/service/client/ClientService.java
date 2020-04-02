@@ -10,8 +10,7 @@ public interface ClientService {
     List<Client> getAll();
     Client getById(int id);
     Client register(String email, String password);
-    Account deposite(long money, int accountId);
+    Account deposit(long money, int accountId);
     Account withdraw(long sum, int accountId);
     long checkBalance(int accountId);
-    List<String> showAccountHistory(int accountId);
 }

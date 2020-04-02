@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class RestController {
     @PutMapping("/clients/{clientId}/accounts/{accountId}/deposit")
     public Account deposit(@PathVariable int clientId, @RequestParam Long money, @PathVariable int accountId) {
         Client client = clientService.getById(clientId);
-        return clientService.deposite(money, accountId);
+        return clientService.deposit(money, accountId);
     }
 
     @PutMapping("/clients/{clientId}/accounts/{accountId}/withdraw")
@@ -52,8 +51,4 @@ public class RestController {
         return clientService.checkBalance(accountId);
     }
 
-    @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
-    public List<String> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
-        return clientService.showAccountHistory(accountId);
-    }
 }
