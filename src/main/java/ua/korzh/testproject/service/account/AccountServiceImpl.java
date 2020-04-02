@@ -11,8 +11,6 @@ import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 
-import java.util.*;
-
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
