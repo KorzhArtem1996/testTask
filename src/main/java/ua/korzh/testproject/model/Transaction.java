@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ACCOUNT_HISTORY")
+@Table(name = "TRANSACTION")
 public class Transaction {
     public Transaction() {}
     public Transaction(OperationName operationName, LocalDateTime timestamp) {
