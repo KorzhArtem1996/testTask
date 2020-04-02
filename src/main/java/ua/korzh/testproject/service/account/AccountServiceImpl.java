@@ -29,17 +29,11 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    private static Map<Account, List<String>> accountsHistory = new HashMap<>();
+
     @Override
     public void addMoney(Account account, long balance) {
             account.setBalance(account.getBalance() + balance);
             acountRepository.saveAndFlush(account);
-            List<String> hsr = accountsHistory.get(account);
-            if (hsr == null) {
-                hsr = new ArrayList<>();
-            }
-            hsr.add("Deposit: " + balance);
-            accountsHistory.put(account, hsr);
     }
 
     @Override
@@ -47,9 +41,6 @@ public class AccountServiceImpl implements AccountService {
         if (sum <= account.getBalance()) {
             account.setBalance(account.getBalance() - sum);
             acountRepository.saveAndFlush(account);
-            List<String> hsr = accountsHistory.getOrDefault(account, new ArrayList<>());
-            hsr.add("Withdraw: " + sum);
-            accountsHistory.put(account, hsr);
 
         } else {
             throw new NotEnoughMoney("You do not have enough money! Balance: " + account.getBalance());
@@ -89,17 +80,4 @@ public class AccountServiceImpl implements AccountService {
             return bal;
     }
 
-    @Override
-    public List<String> history(int accountId) {
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
-        Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
-        List<String> res = accountsHistory.get(account);
-        if (res == null) {
-            res = new ArrayList<>();
-            res.add("Accounts history is empty");
-            return res;
-        }
-        return res;
-    }
 }

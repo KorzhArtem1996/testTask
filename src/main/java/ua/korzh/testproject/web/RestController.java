@@ -52,8 +52,4 @@ public class RestController {
         return clientService.checkBalance(accountId);
     }
 
-    @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
-    public List<String> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
-        return clientService.showAccountHistory(accountId);
-    }
 }

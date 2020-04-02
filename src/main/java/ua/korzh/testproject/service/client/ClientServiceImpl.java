@@ -59,8 +59,4 @@ public class ClientServiceImpl implements ClientService {
         return accountService.checkBalance(accountId);
     }
 
-    @Override
-    public List<String> showAccountHistory(int accountId) {
-        return accountService.history(accountId);
-    }
 }

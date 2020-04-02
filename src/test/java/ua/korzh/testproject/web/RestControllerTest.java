@@ -112,15 +112,4 @@ public class RestControllerTest {
                 .andExpect(content().string(mapper.writeValueAsString(500L)));
     }
 
-    @Test
-    public void showHistoryTest() throws Exception {
-        Client client = new Client("show", "history");
-        ObjectMapper mapper = new ObjectMapper();
-        List<String> list = Arrays.asList("Deposit: 100", "Deposit: 200", "Deposit: 300");
-        given(clientService.showAccountHistory(anyInt())).willReturn(list);
-
-        this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(list)));
-    }
 }
