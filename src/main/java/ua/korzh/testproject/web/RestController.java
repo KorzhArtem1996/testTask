@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
-import ua.korzh.testproject.model.AccountHistory;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class RestController {
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
-    public List<AccountHistory> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
-        return clientService.showAccountHistory(accountId);
+    public List<Transaction> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
+        return clientService.showTransaction(accountId);
     }
 }

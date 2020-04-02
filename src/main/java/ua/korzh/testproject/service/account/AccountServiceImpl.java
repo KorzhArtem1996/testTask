@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.*;
 import ua.korzh.testproject.model.Account;
-import ua.korzh.testproject.model.AccountHistory;
+import ua.korzh.testproject.model.OperationName;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AccountHistoryRepository;
 import ua.korzh.testproject.repository.AcountRepository;
@@ -15,7 +16,6 @@ import ua.korzh.testproject.repository.ClientRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -38,26 +38,26 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addMoney(Account account, long balance) {
-        AccountHistory accountHistory = new AccountHistory("Deposit: " + balance);
-        accountHistory.setBalanceBefore(account.getBalance());
-        accountHistory.setAccount(account);
+        Transaction transaction = new Transaction(OperationName.DEPOSIT, LocalDateTime.now());
+        transaction.setBalance(account.getBalance());
+        transaction.setAmount(balance);
+        transaction.setAccount(account);
         account.setBalance(account.getBalance() + balance);
-        accountHistory.setBalanceAfter(account.getBalance());
-        accountHistoryRepository.saveAndFlush(accountHistory);
-        account.addAccountHistory(accountHistory);
+        account.addTransaction(transaction);
+        accountHistoryRepository.saveAndFlush(transaction);
         acountRepository.saveAndFlush(account);
     }
 
     @Override
     public void withDrawMoney(Account account, long sum) {
         if (sum <= account.getBalance()) {
-            AccountHistory accountHistory = new AccountHistory("Withdraw: " + sum);
-            accountHistory.setBalanceBefore(account.getBalance());
-            accountHistory.setAccount(account);
+            Transaction transaction = new Transaction(OperationName.WITHDRAW, LocalDateTime.now());
+            transaction.setBalance(account.getBalance());
+            transaction.setAmount(sum);
+            transaction.setAccount(account);
             account.setBalance(account.getBalance() - sum);
-            accountHistory.setBalanceAfter(account.getBalance());
-            accountHistoryRepository.saveAndFlush(accountHistory);
-            account.addAccountHistory(accountHistory);
+            account.addTransaction(transaction);
+            accountHistoryRepository.saveAndFlush(transaction);
             acountRepository.saveAndFlush(account);
 
         } else {
@@ -97,10 +97,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountHistory> history(int accountId) {
+    public List<Transaction> history(int accountId) {
         if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
         if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
-        return account.getAccountHistory();
+        return account.getTransactions();
     }
 }

@@ -11,11 +11,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
-import ua.korzh.testproject.model.AccountHistory;
+import ua.korzh.testproject.model.OperationName;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -111,14 +114,14 @@ public class RestControllerTest {
     }
 
     @Test
-    public void showHistoryTest() throws Exception {
+    public void showTransactionTest() throws Exception {
         Client client = new Client("show", "history");
         ObjectMapper mapper = new ObjectMapper();
-        List<AccountHistory> list = Arrays.asList(new AccountHistory("operation1"), new AccountHistory("operation2"), new AccountHistory("operation3"));
-        given(clientService.showAccountHistory(anyInt())).willReturn(list);
+        List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()), new Transaction(OperationName.WITHDRAW, LocalDateTime.now()), new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
+        given(clientService.showTransaction(anyInt())).willReturn(list);
 
         this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(list)));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

@@ -1,11 +1,7 @@
 package ua.korzh.testproject.model;
 
-import org.hibernate.annotations.NaturalId;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -53,14 +49,14 @@ public class Account {
     }
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
-    private List<AccountHistory> accountHistory = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
-    public void addAccountHistory(AccountHistory accountHistory) {
-        this.accountHistory.add(accountHistory);
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
     }
 
-    public List<AccountHistory> getAccountHistory() {
-        return this.accountHistory;
+    public List<Transaction> getTransactions() {
+        return this.transactions;
     }
 
     @Override

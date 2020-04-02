@@ -1,9 +1,8 @@
 package ua.korzh.testproject.service.client;
 
 import ua.korzh.testproject.model.Account;
-import ua.korzh.testproject.model.AccountHistory;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.service.account.AccountService;
 
 import java.util.List;
 
@@ -14,5 +13,5 @@ public interface ClientService {
     Account deposite(long money, int accountId);
     Account withdraw(long sum, int accountId);
     long checkBalance(int accountId);
-    List<AccountHistory> showAccountHistory(int accountId);
+    List<Transaction> showTransaction(int accountId);
 }
