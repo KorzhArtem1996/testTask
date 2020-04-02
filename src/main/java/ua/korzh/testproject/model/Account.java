@@ -3,9 +3,10 @@ package ua.korzh.testproject.model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Objects;
+import java.util.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
+@Table(name = "ACCOUNT", uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,17 @@ public class Account {
 
     public Client getClient() {
         return this.client;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
+    private List<Transaction> transactions = new ArrayList<>();
+
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
+
+    public List<Transaction> getTransactions() {
+        return this.transactions;
     }
 
     @Override

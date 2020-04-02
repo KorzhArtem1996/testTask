@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.*;
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
@@ -102,4 +103,8 @@ public class ClientServiceImpl implements ClientService {
         return res;
     }
 
+    @Override
+    public List<Transaction> showTransaction(int accountId) {
+        return accountService.history(accountId);
+    }
 }

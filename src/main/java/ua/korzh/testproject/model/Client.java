@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
+@Table(name = "CLIENT")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

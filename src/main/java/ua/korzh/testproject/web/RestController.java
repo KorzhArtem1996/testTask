@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
+import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
 
@@ -48,4 +49,8 @@ public class RestController {
         return clientService.checkBalance(accountId);
     }
 
+    @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
+    public List<Transaction> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
+        return clientService.showTransaction(accountId);
+    }
 }
