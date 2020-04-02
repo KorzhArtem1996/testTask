@@ -12,7 +12,6 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,68 +42,62 @@ public class ClientServiceImpl implements ClientService {
         try {
             if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
         } catch (EmailExistsException e) {
-            LOGGER.error("Caught EmailExistsException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         }
         emails.add(email);
         Client client = new Client(email, password);
         clientRepository.saveAndFlush(client);
         Account account = accountService.create(client);
         client.addAccount(account);
-        LOGGER.info("register(" + email + ", " + password + ") succeeded");
+        LOGGER.debug(String.format("register(%s, %s) succeeded", email, password));
         return client;
     }
 
     @Override
     public Account deposit(long money, int accountId) {
-        Account account;
+        Account account = null;
         try {
             account = accountService.deposite(money, accountId);
         } catch (NegativeSumException e) {
-            LOGGER.error("Caught NegativeSumException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         } catch (NegativeAccountIdException e) {
-            LOGGER.error("Caught NegativeAccountIdException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         } catch (AccountNotExistException e) {
-            LOGGER.error("Caught AccountNotExistException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         }
-        LOGGER.info("deposit(" + money + ", " + accountId + ") succeeded");
+        LOGGER.debug(String.format("deposit(%d, %d) succeeded", money, accountId));
         return account;
     }
 
     @Override
     public Account withdraw(long sum, int accountId) {
-        Account account;
+        Account account = null;
         try {
             account = accountService.withdraw(sum, accountId);
         } catch (NegativeSumException e) {
-            LOGGER.error("Caught NegativeSumException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         } catch (NegativeAccountIdException e) {
-            LOGGER.error("Caught NegativeAccountIdException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         } catch (AccountNotExistException e) {
-            LOGGER.error("Caught AccountNotExistException", e);
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         } catch (NotEnoughMoneyException e) {
-            LOGGER.error("Caught NotEnoughtMoneyException");
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
         }
-        LOGGER.info("withdraw(" + sum + ", " + accountId + ") succeeded");
+        LOGGER.debug(String.format("withdraw(%d, %d) succeeded", sum, accountId));
         return account;
     }
 
     @Override
     public long checkBalance(int accountId) {
         long res = accountService.checkBalance(accountId);
-        LOGGER.info("checkBalance(" + accountId + ") succeeded");
+        LOGGER.debug(String.format("checkBalance(%d) succeeded", accountId));
         return res;
     }
 
     @Override
     public List<Transaction> showTransaction(int accountId) {
-        return accountService.history(accountId);
+        List<Transaction> res = accountService.history(accountId);
+        LOGGER.debug(String.format("showTransaction(%d) succeeded", accountId));
+        return res;
     }
 }

@@ -21,10 +21,7 @@ class WithdrawServiceImplTest {
     public void withDrawTest() {
         Client client = clientService.register("withdraw", "lllll");
         clientService.deposit(100L, client.getAccountsId().get(0));
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            Account res = clientService.withdraw(120L, client.getAccountsId().get(0));
-        });
+        Account res = clientService.withdraw(120L, client.getAccountsId().get(0));
+        assertNull(res);
     }
-
-
 }
