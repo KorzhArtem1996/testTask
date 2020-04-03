@@ -49,47 +49,36 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.saveAndFlush(client);
         Account account = accountService.create(client);
         client.addAccount(account);
-        LOGGER.info("register(email, password) succeeded, email={}, password={}", email, password);
+        LOGGER.info("register(email, password) succeeded, email={}", email);
         return client;
     }
 
     @Override
     public Account deposit(long money, int accountId) {
         Account account;
+        final String errorMessage = "deposit(money, accountId) error, money={}, accountId={}";
+        final String successMessage = "deposit(money, accountId) succeeded, money={}, accountId={}";
         try {
             account = accountService.deposite(money, accountId);
-            LOGGER.info("deposit(money, accountId) succeeded, money={}, accountId={}", money, accountId);
+            LOGGER.info(successMessage, money, accountId);
             return account;
-        } catch (NegativeSumException e) {
-            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
-            throw e;
-        } catch (NegativeAccountIdException e) {
-            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
-            throw e;
-        } catch (AccountNotExistException e) {
-            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
+        } catch (NegativeSumException | NegativeAccountIdException | AccountNotExistException e) {
+            LOGGER.error(errorMessage, money, accountId, e);
             throw e;
         }
     }
 
     @Override
     public Account withdraw(long sum, int accountId) {
-        Account account = null;
+        Account account;
+        final String errorMessage = "withdraw(sum, accountId) error, sum={}, accountId={}";
+        final String successMessage = "withdraw(sum, accountId) succeeded, sum={}, accountId={}";
         try {
             account = accountService.withdraw(sum, accountId);
-            LOGGER.info("withdraw(sum, accountId) succeeded, sum={}, accountId={}", sum, accountId);
+            LOGGER.info(successMessage, sum, accountId);
             return account;
-        } catch (NegativeSumException e) {
-            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
-            throw e;
-        } catch (NegativeAccountIdException e) {
-            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
-            throw e;
-        } catch (AccountNotExistException e) {
-            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
-            throw e;
-        } catch (NotEnoughMoneyException e) {
-            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
+        } catch (NegativeSumException | NegativeAccountIdException | AccountNotExistException | NotEnoughMoneyException e) {
+            LOGGER.error(errorMessage, sum, accountId, e);
             throw e;
         }
     }

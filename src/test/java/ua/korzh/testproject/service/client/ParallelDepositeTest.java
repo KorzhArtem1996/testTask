@@ -1,4 +1,4 @@
-package ua.korzh.testproject.clientservice;
+package ua.korzh.testproject.service.client;
 
 import static  org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
