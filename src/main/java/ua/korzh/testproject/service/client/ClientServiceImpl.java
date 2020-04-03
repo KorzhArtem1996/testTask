@@ -49,24 +49,27 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.saveAndFlush(client);
         Account account = accountService.create(client);
         client.addAccount(account);
-        LOGGER.debug(String.format("register(%s, %s) succeeded", email, password));
+        LOGGER.info("register(email, password) succeeded, email={}, password={}", email, password);
         return client;
     }
 
     @Override
     public Account deposit(long money, int accountId) {
-        Account account = null;
+        Account account;
         try {
             account = accountService.deposite(money, accountId);
+            LOGGER.info("deposit(money, accountId) succeeded, money={}, accountId={}", money, accountId);
+            return account;
         } catch (NegativeSumException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
+            throw e;
         } catch (NegativeAccountIdException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
+            throw e;
         } catch (AccountNotExistException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("deposit(money, accountId) error, money={}, accountId={}", money, accountId, e);
+            throw e;
         }
-        LOGGER.debug(String.format("deposit(%d, %d) succeeded", money, accountId));
-        return account;
     }
 
     @Override
@@ -74,30 +77,34 @@ public class ClientServiceImpl implements ClientService {
         Account account = null;
         try {
             account = accountService.withdraw(sum, accountId);
+            LOGGER.info("withdraw(sum, accountId) succeeded, sum={}, accountId={}", sum, accountId);
+            return account;
         } catch (NegativeSumException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
+            throw e;
         } catch (NegativeAccountIdException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
+            throw e;
         } catch (AccountNotExistException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
+            throw e;
         } catch (NotEnoughMoneyException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("withdraw(sum, accountId) error, sum={}, accountId={}", sum, accountId, e);
+            throw e;
         }
-        LOGGER.debug(String.format("withdraw(%d, %d) succeeded", sum, accountId));
-        return account;
     }
 
     @Override
     public long checkBalance(int accountId) {
         long res = accountService.checkBalance(accountId);
-        LOGGER.debug(String.format("checkBalance(%d) succeeded", accountId));
+        LOGGER.info("checkBalance(accountId) succeeded, accountId={}", accountId);
         return res;
     }
 
     @Override
     public List<Transaction> showTransaction(int accountId) {
         List<Transaction> res = accountService.history(accountId);
-        LOGGER.debug(String.format("showTransaction(%d) succeeded", accountId));
+        LOGGER.info("showTransaction(accountId) succeeded, accountId={}", accountId);
         return res;
     }
 }
