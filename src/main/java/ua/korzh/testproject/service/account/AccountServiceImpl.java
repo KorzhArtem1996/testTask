@@ -10,7 +10,7 @@ import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.repository.AccountHistoryRepository;
+import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AcountRepository acountRepository;
     @Autowired
-    private AccountHistoryRepository accountHistoryRepository;
+    private TransactionRepository transactionRepository;
     @Autowired
     private ClientRepository clientRepository;
     @Value("${account.default.balance}")
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
         transaction.setAccount(account);
         account.setBalance(account.getBalance() + balance);
         account.addTransaction(transaction);
-        accountHistoryRepository.saveAndFlush(transaction);
+        transactionRepository.saveAndFlush(transaction);
         acountRepository.saveAndFlush(account);
     }
 
@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
             transaction.setAccount(account);
             account.setBalance(account.getBalance() - sum);
             account.addTransaction(transaction);
-            accountHistoryRepository.saveAndFlush(transaction);
+            transactionRepository.saveAndFlush(transaction);
             acountRepository.saveAndFlush(account);
 
         } else {
