@@ -1,13 +1,13 @@
 package ua.korzh.testproject.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +21,8 @@ public class RestController {
         return clientService.getAll();
     }
 
-    @PostMapping("/register")
+    @PostMapping("/clients")
+    @ResponseStatus(HttpStatus.CREATED)
     public Optional<Client> register(@RequestParam String email, @RequestParam String password) {
         Client client;
         Optional<Client> opt;

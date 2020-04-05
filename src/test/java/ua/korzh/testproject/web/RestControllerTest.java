@@ -53,12 +53,12 @@ public class RestControllerTest {
 
         given(clientService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
         this.mockMvc.perform(
-                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
                 .andExpect(content().string(mapper.writeValueAsString(client)));
         this.mockMvc.perform(
-                post("/register?email=email&password=password").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
                 .andExpect(content().string(mapper.writeValueAsString(null)));
     }
 
