@@ -14,7 +14,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
 
 
     @ExceptionHandler({AccountNotExistException.class, NegativeAccountIdException.class, NegativeSumException.class, NotEnoughMoneyException.class})
-    public ResponseEntity<Object> handleAccountNotExist(RuntimeException re, WebRequest request) {
+    public ResponseEntity<Object> handleAccountNotExistOrNegativeAccountIdOrNegativeSumOrNotEnoughMoney(RuntimeException re, WebRequest request) {
         return handleExceptionInternal(re, re.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 

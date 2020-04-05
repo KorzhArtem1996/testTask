@@ -43,6 +43,7 @@ public class ClientServiceImpl implements ClientService {
             if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
         } catch (EmailExistsException e) {
             LOGGER.error(e.getMessage(), e);
+            throw e;
         }
         emails.add(email);
         Client client = new Client(email, password);

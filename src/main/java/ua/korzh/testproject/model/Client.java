@@ -10,11 +10,11 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "EMAIL", unique = true, nullable = false)
-    @Size(min = 4)
+    @Column(name = "EMAIL", nullable = false)
+    @Size(min = 4, max = 32)
     private String email;
     @Column(name = "PASSWORD", nullable = false)
-    @Size(min = 4)
+    @Size(min = 4, max = 32)
     private String password;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Account> accounts = new HashSet<>();
@@ -28,11 +28,6 @@ public class Client {
     public Client(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public Client(Client client) {
-        this.email = client.email;
-        this.password = client.password;
     }
 
     @Override
