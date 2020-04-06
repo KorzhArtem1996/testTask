@@ -10,28 +10,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ua.korzh.testproject.exception.*;
-import ua.korzh.testproject.service.client.ClientServiceImpl;
 
 @ControllerAdvice
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RestControllerExceptionHandler.class);
 
     @ExceptionHandler({AccountNotExistException.class, NegativeAccountIdException.class, NegativeSumException.class, NotEnoughMoneyException.class})
     public ResponseEntity<Object> handleAccountNotExistOrNegativeAccountIdOrNegativeSumOrNotEnoughMoney(RuntimeException re, WebRequest request) {
-        LOGGER.error(re.getMessage(), re);
+        LOG.error(re.getMessage(), re);
         return handleExceptionInternal(re, re.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(EmailExistsException.class)
     public ResponseEntity<Object> handleEmailExists(RuntimeException re, WebRequest request) {
-        LOGGER.error(re.getMessage(), re);
+        LOG.error(re.getMessage(), re);
         return handleExceptionInternal(re, re.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
-        LOGGER.error(e.getMessage(), e);
+        LOG.error(e.getMessage(), e);
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
+
 }
