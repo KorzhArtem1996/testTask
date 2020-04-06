@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.getById(id);
     }
 
-    private static Set<String> emails = new HashSet<>();
+    private static final Set<String> emails = new HashSet<>();
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public Client register(String email, String password) {

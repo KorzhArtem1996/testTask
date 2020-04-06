@@ -50,7 +50,7 @@ public class Account {
     }
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
-    private List<Transaction> transactions = new ArrayList<>();
+    private final List<Transaction> transactions = new ArrayList<>();
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);

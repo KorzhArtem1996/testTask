@@ -17,7 +17,7 @@ public class Client {
     @Size(min = 4, max = 32)
     private String password;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", fetch = FetchType.LAZY)
-    private Set<Account> accounts = new HashSet<>();
+    private final Set<Account> accounts = new HashSet<>();
 
     public void addAccount(Account account) {
         this.accounts.add(account);
