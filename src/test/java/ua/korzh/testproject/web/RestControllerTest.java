@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
@@ -39,27 +40,29 @@ public class RestControllerTest {
     @Test
     public void getAllClientsTest() throws Exception {
         List<Client> list = Stream
-                .of(new Client("client1", "password1"), new Client("client2", "password2"), new Client("client3", "password3"))
+                .of(new Client("client1", "password1"), new Client("client2", "password2"),
+                        new Client("client3", "password3"))
                 .collect(Collectors.toList());
         given(clientService.getAll()).willReturn(list);
-        this.mockMvc.perform(
-                get("/clients").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(MAPPER.writeValueAsString(list)));
+
+        ResultActions resultActions = this.mockMvc.perform(get("/clients").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(list)));
     }
 
     @Test
     public void registerClientTest() throws Exception{
         Client client = new Client("email", "password");
-
         given(clientService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
-        this.mockMvc.perform(
-                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().string(MAPPER.writeValueAsString(client)));
-        this.mockMvc.perform(
-                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict());
+
+        ResultActions resultActions = this.mockMvc.perform(
+                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(client)));
+        resultActions = this.mockMvc.perform(
+                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(status().isConflict());
     }
 
     @Test
@@ -72,14 +75,17 @@ public class RestControllerTest {
         given(clientService.deposit(anyLong(), anyInt())).willReturn(account1, account2);
         given(clientService.getById(anyInt())).willReturn(client);
 
-        this.mockMvc.perform(
-                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(MAPPER.writeValueAsString(account1)));
-        this.mockMvc.perform(
-                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(MAPPER.writeValueAsString(account2)));
+        ResultActions resultActions = this.mockMvc.perform(
+                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account1)));
+
+        resultActions = this.mockMvc.perform(
+                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account2)));
     }
 
     @Test
@@ -90,10 +96,11 @@ public class RestControllerTest {
         given(clientService.withdraw( anyLong(), anyInt())).willReturn(account);
         given(clientService.getById(anyInt())).willReturn(client);
 
-        this.mockMvc.perform(
-                put("/clients/5/accounts/1/withdraw?sum=100").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(MAPPER.writeValueAsString(account)));
+        ResultActions resultActions = this.mockMvc.perform(
+                put("/clients/5/accounts/1/withdraw?sum=100").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account)));
     }
 
     @Test
@@ -103,20 +110,25 @@ public class RestControllerTest {
         given(clientService.checkBalance(anyInt())).willReturn(500L);
         given(clientService.getById(anyInt())).willReturn(client);
 
-        this.mockMvc.perform(
-                get("/clients/3/accounts/1/balance").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(MAPPER.writeValueAsString(500L)));
+        ResultActions resultActions = this.mockMvc.perform(
+                get("/clients/3/accounts/1/balance").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(500L)));
     }
 
     @Test
     public void showTransactionTest() throws Exception {
         Client client = new Client("show", "history");
-        List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()), new Transaction(OperationName.WITHDRAW, LocalDateTime.now()), new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
+        List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()),
+                new Transaction(OperationName.WITHDRAW, LocalDateTime.now()),
+                new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
         given(clientService.showTransaction(anyInt())).willReturn(list);
 
-        this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = this.mockMvc.perform(
+                get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

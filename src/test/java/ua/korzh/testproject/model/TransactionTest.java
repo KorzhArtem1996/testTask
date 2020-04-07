@@ -20,6 +20,7 @@ class TransactionTest {
         transaction.setAccount(account);
         Transaction transaction2 = new Transaction(OperationName.DEPOSIT, local);
         transaction2.setAccount(account);
+
         assertEquals(transaction, transaction2);
     }
 
@@ -33,6 +34,7 @@ class TransactionTest {
         transaction.setAccount(account);
         Transaction transaction2 = new Transaction(OperationName.WITHDRAW, local);
         transaction2.setAccount(account);
+
         assertNotEquals(transaction.hashCode(), transaction2.hashCode());
     }
 
@@ -45,6 +47,9 @@ class TransactionTest {
         Transaction transaction = new Transaction(OperationName.DEPOSIT, local);
         transaction.setAccount(account);
         System.out.println(local.toString());
-        assertEquals("Transaction{operationName=DEPOSIT, balance=0, amount=0, timestamp=" + local.toString() + ", account=Account{id = 0, balance = 55, clients id =0}}", transaction.toString());
+
+        assertEquals("Transaction{operationName=DEPOSIT, balance=0, amount=0, timestamp="
+                        + local.toString()
+                        + ", account=Account{id = 0, balance = 55, clients id =0}}", transaction.toString());
     }
 }
