@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RestControllerExceptionHandlerTest {
 
     private RestControllerExceptionHandler exceptionHandler = new RestControllerExceptionHandler();
+
     @Test
     void handleAccountNotExist() {
         ResponseEntity<Object> accountNotExist = exceptionHandler.handleAccountNotExistOrNegativeAccountIdOrNegativeSumOrNotEnoughMoney(new AccountNotExistException("Account not exist"), null);
@@ -25,4 +26,5 @@ class RestControllerExceptionHandlerTest {
         ResponseEntity<Object> emailExists = exceptionHandler.handleEmailExists(new EmailExistsException("Email already exists"), null);
         assertEquals("<409 CONFLICT Conflict,Email already exists,[]>", emailExists.toString());
     }
+
 }
