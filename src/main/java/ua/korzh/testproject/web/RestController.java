@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
+
     @Autowired
     private ClientService clientService;
-
     @GetMapping("/clients")
     public List<Client> getAll() {
         return clientService.getAll();

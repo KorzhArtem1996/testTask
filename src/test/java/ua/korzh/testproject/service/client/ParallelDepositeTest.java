@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.service.account.AccountServiceImpl;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
-import ua.korzh.testproject.service.client.ClientService;
 
 @SpringBootTest
 public class ParallelDepositeTest {

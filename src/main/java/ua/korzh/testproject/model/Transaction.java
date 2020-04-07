@@ -7,33 +7,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "TRANSACTION")
 public class Transaction {
-    public Transaction() {}
-    public Transaction(OperationName operationName, LocalDateTime timestamp) {
-        this.operationName = operationName;
-        this.timestamp = timestamp;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(name = "OPERATION_NAME", nullable = false)
     @Enumerated(EnumType.STRING)
     private OperationName operationName;
-
     @Column(name = "BALANCE_BEFORE", nullable = false)
     private long balance;
-
     @Column(name = "AMOUNT", nullable = false)
     private long amount;
-
     @Column(name = "TIMESTAMP", nullable = false)
     private LocalDateTime timestamp;
-
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "ACCOUNT")
     private Account account;
+
+    public Transaction() {}
+
+    public Transaction(OperationName operationName, LocalDateTime timestamp) {
+        this.operationName = operationName;
+        this.timestamp = timestamp;
+    }
 
     public OperationName getOperationName() {
         return operationName;
@@ -66,6 +62,17 @@ public class Transaction {
     public LocalDateTime getTimestamp() { return this.timestamp; }
 
     @Override
+    public String toString() {
+        return "Transaction{" +
+                "operationName=" + operationName +
+                ", balance=" + balance +
+                ", amount=" + amount +
+                ", timestamp=" + timestamp +
+                ", account=" + account +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -80,16 +87,5 @@ public class Transaction {
     @Override
     public int hashCode() {
         return Objects.hash(operationName, balance, amount, timestamp, account);
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "operationName=" + operationName +
-                ", balance=" + balance +
-                ", amount=" + amount +
-                ", timestamp=" + timestamp +
-                ", account=" + account +
-                '}';
     }
 }

@@ -18,24 +18,23 @@ import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
+    private static final Set<String> emails = new HashSet<>();
 
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
-
     @Override
     public List<Client> getAll() {
         return clientRepository.findAll();
     }
-
     @Override
     public Client getById(int id) {
         return clientRepository.getById(id);
     }
 
-    private static final Set<String> emails = new HashSet<>();
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public Client register(String email, String password) {

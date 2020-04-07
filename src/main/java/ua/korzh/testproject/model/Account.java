@@ -8,6 +8,7 @@ import java.util.*;
 @Entity
 @Table(name = "ACCOUNT", uniqueConstraints = @UniqueConstraint(columnNames = {"BALANCE", "NATURAL_ID", "CLIENT"}))
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -18,16 +19,24 @@ public class Account {
     private long version;
     @Column(name = "NATURAL_ID", nullable = false)
     @Min(0)
-    private  int naturalId;
+    private int naturalId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CLIENT")
+    private Client client;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
+    private final List<Transaction> transactions = new ArrayList<>();
 
-    public Account() {}
+    public Account() {
+    }
 
     public Account(int naturalId, long balance) {
         this.naturalId = naturalId;
         this.balance = balance;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
     public long getBalance() {
         return balance;
@@ -37,10 +46,6 @@ public class Account {
         this.balance = balance;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "CLIENT")
-    private Client client;
-
     public void setClient(Client client) {
         this.client = client;
     }
@@ -48,9 +53,6 @@ public class Account {
     public Client getClient() {
         return this.client;
     }
-
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
-    private final List<Transaction> transactions = new ArrayList<>();
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);

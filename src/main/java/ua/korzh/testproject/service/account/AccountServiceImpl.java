@@ -18,6 +18,7 @@ import java.util.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
+
     @Autowired
     private AcountRepository acountRepository;
     @Autowired
@@ -26,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
     private ClientRepository clientRepository;
     @Value("${account.default.balance}")
     private long defaultBalance;
+
     @Override
     public Account create(Client client) {
         Account account = new Account(client.getAccountsId().size(), defaultBalance);
@@ -33,8 +35,6 @@ public class AccountServiceImpl implements AccountService {
         acountRepository.saveAndFlush(account);
         return account;
     }
-
-
 
     @Override
     public void addMoney(Account account, long balance) {

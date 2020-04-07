@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ClientServiceImplTest {
+
     @Autowired
     private ClientService clientService;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
-
 
     @Test
     @Order(1)
