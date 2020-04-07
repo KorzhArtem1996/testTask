@@ -30,6 +30,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         LOG.error(re.getMessage(), re);
         return handleExceptionInternal(re, re.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
         LOG.error(e.getMessage(), e);

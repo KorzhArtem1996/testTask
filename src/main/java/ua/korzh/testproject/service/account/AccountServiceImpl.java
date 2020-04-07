@@ -13,6 +13,7 @@ import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -68,10 +69,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Account deposite(long money, int accountId) {
-        if (money < 0) throw new NegativeSumException("Sum of money must be positive");
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (money < 0) {throw new NegativeSumException("Sum of money must be positive");}
+        if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         addMoney(account, money);
         return account;
     }
@@ -79,27 +80,27 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Account withdraw(long sum, int accountId) {
-        if (sum < 0) throw new NegativeSumException("Sum of money must be positive");
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (sum < 0) {throw new NegativeSumException("Sum of money must be positive");}
+        if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         withDrawMoney(account, sum);
         return account;
     }
 
     @Override
     public long checkBalance(int accountId) {
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         return account.getBalance();
     }
 
     @Override
     public List<Transaction> history(int accountId) {
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         return account.getTransactions();
     }
 }

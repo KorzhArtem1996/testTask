@@ -20,7 +20,8 @@ public class Client {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", fetch = FetchType.LAZY)
     private final Set<Account> accounts = new HashSet<>();
 
-    public Client() {}
+    public Client() {
+    }
 
     public Client(String email, String password) {
         this.email = email;

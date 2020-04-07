@@ -24,7 +24,8 @@ public class Transaction {
     @JoinColumn(name = "ACCOUNT")
     private Account account;
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Transaction(OperationName operationName, LocalDateTime timestamp) {
         this.operationName = operationName;
@@ -59,7 +60,9 @@ public class Transaction {
         this.account = account;
     }
 
-    public LocalDateTime getTimestamp() { return this.timestamp; }
+    public LocalDateTime getTimestamp() {
+        return this.timestamp;
+    }
 
     @Override
     public String toString() {

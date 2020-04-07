@@ -12,6 +12,7 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,10 +27,12 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
+
     @Override
     public List<Client> getAll() {
         return clientRepository.findAll();
     }
+
     @Override
     public Client getById(int id) {
         return clientRepository.getById(id);
@@ -41,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
         final String startMessage = "register(email, password) started, email={}";
         final String successMessage = "register(email, password) succeeded, email={}";
         LOGGER.info(startMessage, email);
-        if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
+        if (emails.contains(email)) {throw new EmailExistsException("E-mail \'" + email + "\' already exists");}
         emails.add(email);
         Client client = new Client(email, password);
         clientRepository.saveAndFlush(client);

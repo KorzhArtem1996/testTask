@@ -3,6 +3,7 @@ package ua.korzh.testproject.service.client;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
+
 import java.util.List;
 
 public interface ClientService {
