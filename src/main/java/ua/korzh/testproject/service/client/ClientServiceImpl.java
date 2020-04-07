@@ -12,13 +12,26 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
+    private static final Set<String> EMAILS = new CopyOnWriteArraySet();
+    private static final String REGISTER_START_MESSAGE = "register(email, password) started, email={}";
+    private static final String REGISTER_SUCCESS_MESSAGE = "register(email, password) succeeded, email={}";
+    private static final String DEPOSIT_START_MESSAGE = "deposit(money, accountId) started, money={}, accountId={}";
+    private static final String DEPOSIT_SUCCESS_MESSAGE = "deposit(money, accountId) succeeded, money={}, accountId={}";
+    private static final String WITHDRAW_START_MESSAGE = "withdraw(sum, accountId) started, sum={}, accountId={}";
+    private static final String WITHDRAW_SUCCESS_MESSAGE = "withdraw(sum, accountId) succeeded, sum={}, accountId={}";
+    private static final String CHECK_BALANCE_START_MESSAGE = "checkBalance(accountId) started, accountId={}";;
+    private static final String CHECK_BALANCE_SUCCESS_MESSAGE = "checkBalance(accountId) succeeded, accountId={}";
+    private static final String SHOW_TRANSACTION_START_MESSAGE = "showTransaction(accountId) started, accountId={}";
+    private static final String SHOW_TRANSACTION_SUCCESS_MESSAGE = "showTransaction(accountId) succeeded, accountId={}";
+    private static final String EMAIL_EXISTS_EXCEPTION = "E-mail '%s' already exists";
 
     @Autowired
     private ClientRepository clientRepository;
@@ -35,62 +48,49 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.getById(id);
     }
 
-    private static final Set<String> emails = new HashSet<>();
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public Client register(String email, String password) {
-        final String startMessage = "register(email, password) started, email={}";
-        final String successMessage = "register(email, password) succeeded, email={}";
-        LOGGER.info(startMessage, email);
-        if (emails.contains(email)) throw new EmailExistsException("E-mail \'" + email + "\' already exists");
-        emails.add(email);
+        LOGGER.info(REGISTER_START_MESSAGE, email);
+        if (EMAILS.contains(email)) throw new EmailExistsException(String.format(EMAIL_EXISTS_EXCEPTION, email));
+        EMAILS.add(email);
         Client client = new Client(email, password);
         clientRepository.saveAndFlush(client);
         Account account = accountService.create(client);
         client.addAccount(account);
-        LOGGER.info(successMessage, email);
+        LOGGER.info(REGISTER_SUCCESS_MESSAGE, email);
         return client;
     }
 
     @Override
     public Account deposit(long money, int accountId) {
-
-        final String startMessage = "deposit(money, accountId) started, money={}, accountId={}";
-        final String successMessage = "deposit(money, accountId) succeeded, money={}, accountId={}";
-        LOGGER.info(startMessage, money, accountId);
+        LOGGER.info(DEPOSIT_START_MESSAGE, money, accountId);
         Account account = accountService.deposite(money, accountId);
-        LOGGER.info(successMessage, money, accountId);
+        LOGGER.info(DEPOSIT_SUCCESS_MESSAGE, money, accountId);
         return account;
     }
 
     @Override
     public Account withdraw(long sum, int accountId) {
-        Account account;
-        final String startMessage = "withdraw(sum, accountId) started, sum={}, accountId={}";
-        final String successMessage = "withdraw(sum, accountId) succeeded, sum={}, accountId={}";
-        LOGGER.info(startMessage, sum, accountId);
-        account = accountService.withdraw(sum, accountId);
-        LOGGER.info(successMessage, sum, accountId);
+        LOGGER.info(WITHDRAW_START_MESSAGE, sum, accountId);
+        Account account = accountService.withdraw(sum, accountId);
+        LOGGER.info(WITHDRAW_SUCCESS_MESSAGE, sum, accountId);
         return account;
     }
 
     @Override
     public long checkBalance(int accountId) {
-        final String startMessage = "checkBalance(accountId) started, accountId={}";
-        final String successMessage = "checkBalance(accountId) succeeded, accountId={}";
-        LOGGER.info(startMessage, accountId);
+        LOGGER.info(CHECK_BALANCE_START_MESSAGE, accountId);
         long res = accountService.checkBalance(accountId);
-        LOGGER.info(successMessage, accountId);
+        LOGGER.info(CHECK_BALANCE_SUCCESS_MESSAGE, accountId);
         return res;
     }
 
     @Override
     public List<Transaction> showTransaction(int accountId) {
-        final String startMessage = "showTransaction(accountId) started, accountId={}";
-        final String successMessage = "showTransaction(accountId) succeeded, accountId={}";
-        LOGGER.info(startMessage, accountId);
+        LOGGER.info(SHOW_TRANSACTION_START_MESSAGE, accountId);
         List<Transaction> res = accountService.history(accountId);
-        LOGGER.info(successMessage, accountId);
+        LOGGER.info(SHOW_TRANSACTION_SUCCESS_MESSAGE, accountId);
         return res;
     }
 }

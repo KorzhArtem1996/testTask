@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
+
     @Autowired
     private ClientService clientService;
 
@@ -23,16 +24,8 @@ public class RestController {
 
     @PostMapping("/clients")
     @ResponseStatus(HttpStatus.CREATED)
-    public Optional<Client> register(@RequestParam String email, @RequestParam String password) {
-        Client client;
-        Optional<Client> opt;
-        try {
-             client = clientService.register(email, password);
-             opt = Optional.ofNullable(client);
-        } catch (EmailExistsException e) {
-            opt = Optional.empty();
-        }
-        return opt;
+    public Client register(@RequestParam String email, @RequestParam String password) {
+        return clientService.register(email, password);
     }
 
     @PutMapping("/clients/{clientId}/accounts/{accountId}/deposit")

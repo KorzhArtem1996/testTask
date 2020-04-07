@@ -18,6 +18,11 @@ import java.util.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
+
+    private static final String ACCOUNT_NOT_EXISTS = "Account with id %d does not exist";
+    private static final String POSITIVE_SUM = "Sum of money must be positive";
+    private static final String NOT_ENOUGH_MONEY = "You do not have enough money! Balance: %d";
+
     @Autowired
     private AcountRepository acountRepository;
     @Autowired
@@ -26,6 +31,7 @@ public class AccountServiceImpl implements AccountService {
     private ClientRepository clientRepository;
     @Value("${account.default.balance}")
     private long defaultBalance;
+
     @Override
     public Account create(Client client) {
         Account account = new Account(client.getAccountsId().size(), defaultBalance);
@@ -34,44 +40,40 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-
-
-    @Override
-    public void addMoney(Account account, long balance) {
+    private void createTransaction(OperationName operationName, Account account, long money) {
         Transaction transaction = new Transaction(OperationName.DEPOSIT, LocalDateTime.now());
         transaction.setBalance(account.getBalance());
-        transaction.setAmount(balance);
+        transaction.setAmount(money);
         transaction.setAccount(account);
-        account.setBalance(account.getBalance() + balance);
+        switch (operationName) {
+            case DEPOSIT: account.setBalance(account.getBalance() + money); break;
+            case WITHDRAW: account.setBalance(account.getBalance() - money); break;
+        }
         account.addTransaction(transaction);
         transactionRepository.saveAndFlush(transaction);
         acountRepository.saveAndFlush(account);
     }
 
     @Override
-    public void withDrawMoney(Account account, long sum) {
-        if (sum <= account.getBalance()) {
-            Transaction transaction = new Transaction(OperationName.WITHDRAW, LocalDateTime.now());
-            transaction.setBalance(account.getBalance());
-            transaction.setAmount(sum);
-            transaction.setAccount(account);
-            account.setBalance(account.getBalance() - sum);
-            account.addTransaction(transaction);
-            transactionRepository.saveAndFlush(transaction);
-            acountRepository.saveAndFlush(account);
+    public void addMoney(Account account, long balance) {
+        createTransaction(OperationName.DEPOSIT, account, balance);
+    }
 
+    @Override
+    public void withDrawMoney(Account account, long sum) {
+        if (sum > account.getBalance()) {
+            throw new NotEnoughMoneyException(String.format(NOT_ENOUGH_MONEY, account.getBalance()));
         } else {
-            throw new NotEnoughMoneyException("You do not have enough money! Balance: " + account.getBalance());
+            createTransaction(OperationName.WITHDRAW, account, sum);
         }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Account deposite(long money, int accountId) {
-        if (money < 0) throw new NegativeSumException("Sum of money must be positive");
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (money < 0) throw new NegativeSumException(POSITIVE_SUM);
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));
         addMoney(account, money);
         return account;
     }
@@ -79,27 +81,24 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Account withdraw(long sum, int accountId) {
-        if (sum < 0) throw new NegativeSumException("Sum of money must be positive");
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
+        if (sum < 0) throw new NegativeSumException(POSITIVE_SUM);
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));
         withDrawMoney(account, sum);
         return account;
     }
 
     @Override
     public long checkBalance(int accountId) {
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));
         return account.getBalance();
     }
 
     @Override
     public List<Transaction> history(int accountId) {
-        if (accountId < 0) throw new NegativeAccountIdException("Accounts id must be positive");
         Account account = acountRepository.getById(accountId);
-        if (account == null) throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");
+        if (account == null) throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));
         return account.getTransactions();
     }
 }
