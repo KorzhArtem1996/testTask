@@ -12,10 +12,16 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+/**
+ * Implementation of {@link ClientService} interface.
+ *
+ * @author Korzh Artem
+ * @version 1.0
+ */
 
 @Service
 public class ClientServiceImpl implements ClientService {
