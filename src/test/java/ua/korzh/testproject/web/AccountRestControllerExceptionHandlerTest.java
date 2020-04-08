@@ -10,7 +10,7 @@ import ua.korzh.testproject.exception.EmailExistsException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class RestControllerExceptionHandlerTest {
+class AccountRestControllerExceptionHandlerTest {
 
     private RestControllerExceptionHandler exceptionHandler = new RestControllerExceptionHandler();
 

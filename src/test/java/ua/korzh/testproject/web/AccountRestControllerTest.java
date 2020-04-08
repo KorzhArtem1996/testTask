@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import ua.korzh.testproject.exception.EmailExistsException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
 import ua.korzh.testproject.model.Transaction;
@@ -21,14 +20,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(RestController.class)
-public class RestControllerTest {
+@WebMvcTest(AccountRestController.class)
+public class AccountRestControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -36,34 +33,6 @@ public class RestControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private ClientService clientService;
-
-    @Test
-    public void getAllClientsTest() throws Exception {
-        List<Client> list = Stream
-                .of(new Client("client1", "password1"), new Client("client2", "password2"),
-                        new Client("client3", "password3"))
-                .collect(Collectors.toList());
-        given(clientService.getAll()).willReturn(list);
-
-        ResultActions resultActions = this.mockMvc.perform(get("/clients").accept(MediaType.APPLICATION_JSON));
-
-        resultActions.andExpect(status().isOk());
-        resultActions.andExpect(content().string(MAPPER.writeValueAsString(list)));
-    }
-
-    @Test
-    public void registerClientTest() throws Exception{
-        Client client = new Client("email", "password");
-        given(clientService.register(anyString(), anyString())).willReturn(client).willThrow(EmailExistsException.class);
-
-        ResultActions resultActions = this.mockMvc.perform(
-                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
-        resultActions.andExpect(status().isCreated());
-        resultActions.andExpect(content().string(MAPPER.writeValueAsString(client)));
-        resultActions = this.mockMvc.perform(
-                post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
-        resultActions.andExpect(status().isConflict());
-    }
 
     @Test
     public void depositMoneyTest() throws Exception {
@@ -93,7 +62,7 @@ public class RestControllerTest {
         Client client = new Client("withdraw", "money");
         Account account = new Account();
         account.setBalance(100L);
-        given(clientService.withdraw( anyLong(), anyInt())).willReturn(account);
+        given(clientService.withdraw(anyLong(), anyInt())).willReturn(account);
         given(clientService.getById(anyInt())).willReturn(client);
 
         ResultActions resultActions = this.mockMvc.perform(
