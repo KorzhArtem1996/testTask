@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.ClientService;
-
 import java.util.List;
 
 @RestController

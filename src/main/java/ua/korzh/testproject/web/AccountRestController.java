@@ -1,11 +1,9 @@
 package ua.korzh.testproject.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Transaction;
-import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
 import java.util.List;
 

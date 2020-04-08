@@ -52,10 +52,13 @@ class ClientRestControllerTest {
 
         ResultActions resultActions = this.mockMvc.perform(
                 post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
+
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(client)));
+
         resultActions = this.mockMvc.perform(
                 post("/clients?email=email&password=password").accept(MediaType.APPLICATION_JSON));
+
         resultActions.andExpect(status().isConflict());
     }
 }
