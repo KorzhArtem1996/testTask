@@ -1,7 +1,7 @@
 package ua.korzh.testproject.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,20 +41,13 @@ public class AccountRestControllerTest {
         account1.setBalance(100L);
         Account account2 = new Account();
         account2.setBalance(200L);
-        given(clientService.deposit(anyLong(), anyInt())).willReturn(account1, account2);
-        given(clientService.getById(anyInt())).willReturn(client);
+        given(clientService.deposit(eq(500L), eq(1))).willReturn(account1, account2);
 
         ResultActions resultActions = this.mockMvc.perform(
-                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON));
+                put("/clients/{clientId}/accounts/{accountId}/deposit?money=500", 1, 1).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(account1)));
-
-        resultActions = this.mockMvc.perform(
-                put("/clients/1/accounts/1/deposit?money=500").accept(MediaType.APPLICATION_JSON));
-
-        resultActions.andExpect(status().isOk());
-        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account2)));
     }
 
     @Test
@@ -62,11 +55,10 @@ public class AccountRestControllerTest {
         Client client = new Client("withdraw", "money");
         Account account = new Account();
         account.setBalance(100L);
-        given(clientService.withdraw(anyLong(), anyInt())).willReturn(account);
-        given(clientService.getById(anyInt())).willReturn(client);
+        given(clientService.withdraw(eq(100L), eq(1))).willReturn(account);
 
         ResultActions resultActions = this.mockMvc.perform(
-                put("/clients/5/accounts/1/withdraw?sum=100").accept(MediaType.APPLICATION_JSON));
+                put("/clients/{clientI}/accounts/{accountId}/withdraw?sum=100", 1, 1).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(account)));
@@ -76,11 +68,10 @@ public class AccountRestControllerTest {
     public void checkBalanceTest() throws Exception {
         Client client = new Client("check", "balance");
         client.addAccount(new Account());
-        given(clientService.checkBalance(anyInt())).willReturn(500L);
-        given(clientService.getById(anyInt())).willReturn(client);
+        given(clientService.checkBalance(eq(1))).willReturn(500L);
 
         ResultActions resultActions = this.mockMvc.perform(
-                get("/clients/3/accounts/1/balance").accept(MediaType.APPLICATION_JSON));
+                get("/clients/{clientId}/accounts/{accountId}/balance", 1, 1).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(500L)));
@@ -92,10 +83,10 @@ public class AccountRestControllerTest {
         List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()),
                 new Transaction(OperationName.WITHDRAW, LocalDateTime.now()),
                 new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
-        given(clientService.showTransaction(anyInt())).willReturn(list);
+        given(clientService.showTransaction(eq(1))).willReturn(list);
 
         ResultActions resultActions = this.mockMvc.perform(
-                get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON));
+                get("/clients/{clientId}/accounts/{accountId}/history", 1, 1).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
