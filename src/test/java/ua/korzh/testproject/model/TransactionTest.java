@@ -2,9 +2,7 @@ package ua.korzh.testproject.model;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -45,6 +43,8 @@ class TransactionTest {
         Transaction transaction = new Transaction(OperationName.DEPOSIT, local);
         transaction.setAccount(account);
         System.out.println(local.toString());
-        assertEquals("Transaction{operationName=DEPOSIT, balance=0, amount=0, timestamp=" + local.toString() + ", account=Account{id = 0, balance = 55, clients id =0}}", transaction.toString());
+        assertEquals("Transaction{operationName=DEPOSIT, balance=0, amount=0, timestamp="
+                + local.toString()
+                + ", account=Account{id = 0, balance = 55, clients id =0}}", transaction.toString());
     }
 }

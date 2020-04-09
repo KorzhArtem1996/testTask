@@ -53,7 +53,7 @@ public class RestController {
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
-    public List<Transaction> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
+    public List<Transaction> showHistory(@PathVariable int clientId, @PathVariable int accountId) {
         return clientService.showTransaction(accountId);
     }
 }

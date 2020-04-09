@@ -22,7 +22,6 @@ import java.util.Set;
  * @author Korzh Artem
  * @version 1.0
  */
-
 @Service
 public class ClientServiceImpl implements ClientService {
 

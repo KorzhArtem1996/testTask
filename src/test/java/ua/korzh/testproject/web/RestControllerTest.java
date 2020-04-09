@@ -37,7 +37,8 @@ public class RestControllerTest {
     @Test
     public void getAllClientsTest() throws Exception {
         List<Client> list = Stream
-                .of(new Client("client1", "password1"), new Client("client2", "password2"), new Client("client3", "password3"))
+                .of(new Client("client1", "password1"), new Client("client2", "password2"),
+                        new Client("client3", "password3"))
                 .collect(Collectors.toList());
         ObjectMapper mapper = new ObjectMapper();
         given(clientService.getAll()).willReturn(list);
@@ -115,9 +116,9 @@ public class RestControllerTest {
 
     @Test
     public void showTransactionTest() throws Exception {
-        Client client = new Client("show", "history");
-        ObjectMapper mapper = new ObjectMapper();
-        List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()), new Transaction(OperationName.WITHDRAW, LocalDateTime.now()), new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
+        List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()),
+                new Transaction(OperationName.WITHDRAW, LocalDateTime.now()),
+                new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
         given(clientService.showTransaction(anyInt())).willReturn(list);
 
         this.mockMvc.perform(get("/clients/1/accounts/1/history").accept(MediaType.APPLICATION_JSON))

@@ -24,8 +24,6 @@ public class AccountServiceImpl implements AccountService {
     private AcountRepository acountRepository;
     @Autowired
     private TransactionRepository transactionRepository;
-    @Autowired
-    private ClientRepository clientRepository;
     @Value("${account.default.balance}")
     private long defaultBalance;
 
@@ -72,7 +70,8 @@ public class AccountServiceImpl implements AccountService {
         if (money < 0) {throw new NegativeSumException("Sum of money must be positive");}
         if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
+        if (account == null) {
+            throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         addMoney(account, money);
         return account;
     }
@@ -83,7 +82,8 @@ public class AccountServiceImpl implements AccountService {
         if (sum < 0) {throw new NegativeSumException("Sum of money must be positive");}
         if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
+        if (account == null) {
+            throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         withDrawMoney(account, sum);
         return account;
     }
@@ -92,7 +92,8 @@ public class AccountServiceImpl implements AccountService {
     public long checkBalance(int accountId) {
         if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
+        if (account == null) {
+            throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         return account.getBalance();
     }
 
@@ -100,7 +101,8 @@ public class AccountServiceImpl implements AccountService {
     public List<Transaction> history(int accountId) {
         if (accountId < 0) {throw new NegativeAccountIdException("Accounts id must be positive");}
         Account account = acountRepository.getById(accountId);
-        if (account == null) {throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
+        if (account == null) {
+            throw new AccountNotExistException("Account with id <" + accountId + "> does not exist");}
         return account.getTransactions();
     }
 }
