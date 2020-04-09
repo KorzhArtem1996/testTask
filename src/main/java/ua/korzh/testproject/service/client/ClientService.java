@@ -30,7 +30,7 @@ public interface ClientService {
      * Registers client.
      * @param email the e-mail of client
      * @param password the password of client
-     * @throws ua.korzh.testproject.exception.EmailExistsException
+     * @throws ua.korzh.testproject.exception.EmailExistsException if client with this e-mail already exists
      * @return client that was registered
      */
     Client register(String email, String password);
@@ -39,8 +39,8 @@ public interface ClientService {
      * Allows to deposit money to the client's account.
      * @param money sum of money to be deposited to the account
      * @param accountId the identifier of client's account
-     * @throws ua.korzh.testproject.exception.NegativeSumException
-     * @throws ua.korzh.testproject.exception.AccountNotExistException
+     * @throws ua.korzh.testproject.exception.NegativeSumException if sum of money is negative
+     * @throws ua.korzh.testproject.exception.AccountNotExistException if account with this id does not exist
      * @return account with refreshed balance
      */
     Account deposit(long money, int accountId);
@@ -49,9 +49,9 @@ public interface ClientService {
      * Allows to withdraw sum of money from client's account.
      * @param sum sum of money to be withdrawn
      * @param accountId the identifier of client's account
-     * @throws ua.korzh.testproject.exception.NegativeSumException
-     * @throws ua.korzh.testproject.exception.AccountNotExistException
-     * @throws ua.korzh.testproject.exception.NotEnoughMoneyException
+     * @throws ua.korzh.testproject.exception.NegativeSumException if sum of money is negative
+     * @throws ua.korzh.testproject.exception.AccountNotExistException if account with this id does not exist
+     * @throws ua.korzh.testproject.exception.NotEnoughMoneyException is account with this id doesn't have enough money
      * @return account with refreshed balance
      */
     Account withdraw(long sum, int accountId);

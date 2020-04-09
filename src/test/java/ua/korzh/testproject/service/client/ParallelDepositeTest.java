@@ -32,6 +32,7 @@ public class ParallelDepositeTest {
             Object res = invocationOnMock.callRealMethod();
             return res;
         }).when(accountService).addMoney(any(), eq(5L));
+
         assertThrows(ObjectOptimisticLockingFailureException.class,
                 () -> clientService.deposit(5L, client1.getAccountsId().get(0)));
     }

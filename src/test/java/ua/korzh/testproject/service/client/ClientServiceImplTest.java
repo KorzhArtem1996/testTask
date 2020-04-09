@@ -12,7 +12,6 @@ import ua.korzh.testproject.exception.NotEnoughMoneyException;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
-import ua.korzh.testproject.service.account.AccountService;
 import java.util.Collections;
 import java.util.List;
 import static org.junit.Assert.assertEquals;

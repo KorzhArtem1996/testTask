@@ -12,7 +12,6 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.repository.AcountRepository;
-import ua.korzh.testproject.repository.ClientRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
