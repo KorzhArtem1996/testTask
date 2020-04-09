@@ -23,8 +23,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class ClientServiceImpl implements ClientService, InitializingBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
-    private static final ConcurrentHashMap<String, Integer> CONCURRENT_HASH_MAP = new ConcurrentHashMap<>();
-    private static final Set<String> EMAILS = CONCURRENT_HASH_MAP.newKeySet();
+    private static final Set<String> EMAILS = ConcurrentHashMap.newKeySet();
     private static final String REGISTER_START_MESSAGE = "register(email, password) started, email={}";
     private static final String REGISTER_SUCCESS_MESSAGE = "register(email, password) succeeded, email={}";
     private static final String DEPOSIT_START_MESSAGE = "deposit(money, accountId) started, money={}, accountId={}";
@@ -56,8 +55,8 @@ public class ClientServiceImpl implements ClientService, InitializingBean {
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public Client register(String email, String password) {
         LOGGER.info(REGISTER_START_MESSAGE, email);
-        if (EMAILS.contains(email)) throw new EmailExistsException(String.format(EMAIL_EXISTS_EXCEPTION, email));
-        EMAILS.add(email);
+        boolean isAdded = EMAILS.add(email);
+        if (!isAdded) {throw new EmailExistsException(String.format(EMAIL_EXISTS_EXCEPTION, email));}
         Client client = new Client(email, password);
         clientRepository.saveAndFlush(client);
         Account account = accountService.create(client);
@@ -100,9 +99,7 @@ public class ClientServiceImpl implements ClientService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<Client> clients = clientRepository.findAll();
-        clients.forEach(c -> {
-                    EMAILS.add(c.getEmail());
-                });
+        List<String> clients = clientRepository.getAllUserEmails();
+        EMAILS.addAll(clients);
     }
 }

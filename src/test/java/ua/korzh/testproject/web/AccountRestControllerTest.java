@@ -1,7 +1,7 @@
 package ua.korzh.testproject.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,6 +23,8 @@ import java.util.List;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+//Replace import org.junit.jupiter.api.Test; to import org.junit.Test;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountRestController.class)
 public class AccountRestControllerTest {
@@ -36,7 +38,6 @@ public class AccountRestControllerTest {
 
     @Test
     public void depositMoneyTest() throws Exception {
-        Client client = new Client("deposit", "money");
         Account account1 = new Account();
         account1.setBalance(100L);
         Account account2 = new Account();
