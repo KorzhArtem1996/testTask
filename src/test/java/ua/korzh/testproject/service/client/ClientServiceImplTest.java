@@ -6,16 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.EmailExistsException;
-import ua.korzh.testproject.exception.NegativeSumException;
-import ua.korzh.testproject.exception.NotEnoughMoneyException;
-import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
-import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.repository.TransactionRepository;
-import ua.korzh.testproject.service.account.AccountService;
-
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -26,8 +20,6 @@ class ClientServiceImplTest {
 
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private AccountService accountService;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -61,8 +53,6 @@ class ClientServiceImplTest {
         Client actual = clientService.getById(expected.getId());
 
         assertEquals(expected, actual);
-
-
     }
 
     @Test

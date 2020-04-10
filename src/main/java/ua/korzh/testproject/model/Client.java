@@ -7,6 +7,7 @@ import java.util.*;
 @Entity
 @Table(name = "CLIENT")
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,10 +20,6 @@ public class Client {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", fetch = FetchType.LAZY)
     private final Set<Account> accounts = new HashSet<>();
 
-    public void addAccount(Account account) {
-        this.accounts.add(account);
-    }
-
     public Client() {}
 
     public Client(String email, String password) {
@@ -30,14 +27,8 @@ public class Client {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", accounts=" + accounts +
-                '}';
+    public void addAccount(Account account) {
+        this.accounts.add(account);
     }
 
     public String getEmail() {
@@ -50,6 +41,7 @@ public class Client {
         }
         return null;
     }
+
     public List<Integer> getAccountsId() {
         List<Integer> res = new ArrayList<>();
         for (Account account : accounts) {
@@ -60,6 +52,16 @@ public class Client {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", accounts=" + accounts +
+                '}';
     }
 
     @Override

@@ -14,23 +14,17 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.repository.AcountRepository;
-import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.client.ClientServiceImpl;
-
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
     private static final String ACCOUNT_NOT_EXISTS = "Account with id %d does not exist";
     private static final String POSITIVE_SUM = "Sum of money must be positive";
     private static final String NOT_ENOUGH_MONEY = "You do not have enough money! Balance: %d";
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
-    private static final Set<String> EMAILS = ConcurrentHashMap.newKeySet();
-    private static final String REGISTER_START_MESSAGE = "register(email, password) started, email={}";
-    private static final String REGISTER_SUCCESS_MESSAGE = "register(email, password) succeeded, email={}";
     private static final String DEPOSIT_START_MESSAGE = "deposit(money, accountId) started, money={}, accountId={}";
     private static final String DEPOSIT_SUCCESS_MESSAGE = "deposit(money, accountId) succeeded, money={}, accountId={}";
     private static final String WITHDRAW_START_MESSAGE = "withdraw(sum, accountId) started, sum={}, accountId={}";
@@ -45,8 +39,6 @@ public class AccountServiceImpl implements AccountService {
     private AcountRepository acountRepository;
     @Autowired
     private TransactionRepository transactionRepository;
-    @Autowired
-    private ClientRepository clientRepository;
     @Value("${account.default.balance}")
     private long defaultBalance;
 

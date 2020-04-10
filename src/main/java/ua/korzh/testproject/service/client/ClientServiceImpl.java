@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.exception.*;
 import ua.korzh.testproject.model.Account;
-import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
@@ -24,14 +23,6 @@ public class ClientServiceImpl implements ClientService, InitializingBean {
     private static final Set<String> EMAILS = ConcurrentHashMap.newKeySet();
     private static final String REGISTER_START_MESSAGE = "register(email, password) started, email={}";
     private static final String REGISTER_SUCCESS_MESSAGE = "register(email, password) succeeded, email={}";
-    private static final String DEPOSIT_START_MESSAGE = "deposit(money, accountId) started, money={}, accountId={}";
-    private static final String DEPOSIT_SUCCESS_MESSAGE = "deposit(money, accountId) succeeded, money={}, accountId={}";
-    private static final String WITHDRAW_START_MESSAGE = "withdraw(sum, accountId) started, sum={}, accountId={}";
-    private static final String WITHDRAW_SUCCESS_MESSAGE = "withdraw(sum, accountId) succeeded, sum={}, accountId={}";
-    private static final String CHECK_BALANCE_START_MESSAGE = "checkBalance(accountId) started, accountId={}";;
-    private static final String CHECK_BALANCE_SUCCESS_MESSAGE = "checkBalance(accountId) succeeded, accountId={}";
-    private static final String SHOW_TRANSACTION_START_MESSAGE = "showTransaction(accountId) started, accountId={}";
-    private static final String SHOW_TRANSACTION_SUCCESS_MESSAGE = "showTransaction(accountId) succeeded, accountId={}";
     private static final String EMAIL_EXISTS_EXCEPTION = "E-mail '%s' already exists";
 
     @Autowired

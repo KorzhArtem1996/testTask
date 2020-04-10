@@ -14,7 +14,6 @@ import ua.korzh.testproject.service.client.ClientService;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(ClientRestController.class)
 class ClientRestControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -35,12 +34,14 @@ class ClientRestControllerTest {
     @Test
     public void getAllClientsTest() throws Exception {
         List<Client> list = Stream
-                .of(new Client("client1", "password1"), new Client("client2", "password2"),
+                .of(new Client("client1", "password1"),
+                        new Client("client2", "password2"),
                         new Client("client3", "password3"))
                 .collect(Collectors.toList());
         given(clientService.getAll()).willReturn(list);
 
-        ResultActions resultActions = this.mockMvc.perform(get("/clients").accept(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = this.mockMvc.perform(get("/clients")
+                .accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -52,17 +53,20 @@ class ClientRestControllerTest {
         Client client = new Client("email", "password");
         String email = "email";
         String password = "password";
-        given(clientService.register(eq(email), eq(password))).willReturn(client).willThrow(EmailExistsException.class);
+        given(clientService.register(eq(email), eq(password))).willReturn(client)
+                .willThrow(EmailExistsException.class);
 
         ResultActions resultActions = this.mockMvc.perform(
-                post("/clients?email={email}&password={password}", email, password).accept(MediaType.APPLICATION_JSON));
+                post("/clients?email={email}&password={password}",
+                        email, password).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(client)));
 
         resultActions = this.mockMvc.perform(
-                post("/clients?email={email}&password={password}", email, password).accept(MediaType.APPLICATION_JSON));
+                post("/clients?email={email}&password={password}",
+                        email, password).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isConflict());
     }

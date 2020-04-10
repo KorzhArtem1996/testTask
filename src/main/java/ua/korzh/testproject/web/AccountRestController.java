@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.service.account.AccountService;
-import ua.korzh.testproject.service.client.*;
 import java.util.List;
 
 @RestController

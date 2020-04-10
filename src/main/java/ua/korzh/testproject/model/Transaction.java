@@ -7,33 +7,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "TRANSACTION")
 public class Transaction {
-    public Transaction() {}
-    public Transaction(OperationName operationName, LocalDateTime timestamp) {
-        this.operationName = operationName;
-        this.timestamp = timestamp;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(name = "OPERATION_NAME", nullable = false)
     @Enumerated(EnumType.STRING)
     private OperationName operationName;
-
     @Column(name = "BALANCE_BEFORE", nullable = false)
     private long balance;
-
     @Column(name = "AMOUNT", nullable = false)
     private long amount;
-
     @Column(name = "TIMESTAMP", nullable = false)
     private LocalDateTime timestamp;
-
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "ACCOUNT")
     private Account account;
+
+    public Transaction() {}
+
+    public Transaction(OperationName operationName, LocalDateTime timestamp) {
+        this.operationName = operationName;
+        this.timestamp = timestamp;
+    }
 
     public OperationName getOperationName() {
         return operationName;

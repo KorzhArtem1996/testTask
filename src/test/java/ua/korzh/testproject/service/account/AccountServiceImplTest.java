@@ -1,5 +1,6 @@
 package ua.korzh.testproject.service.account;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,10 +11,10 @@ import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.repository.AcountRepository;
+import ua.korzh.testproject.repository.ClientRepository;
+import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.service.client.ClientService;
-
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,6 +27,17 @@ public class AccountServiceImplTest {
     private AccountService accountService;
     @Autowired
     private AcountRepository acountRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+    @BeforeEach
+    public void clearDB() {
+        clientRepository.deleteAll();
+        acountRepository.deleteAll();
+        transactionRepository.deleteAll();
+    }
 
     @Test
     @Transactional
