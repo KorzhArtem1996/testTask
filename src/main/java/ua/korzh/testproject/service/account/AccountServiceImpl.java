@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    private void createTransaction(OperationName operationName, Account account, long money) {
+    void createTransaction(OperationName operationName, Account account, long money) {
         Transaction transaction = new Transaction(operationName, LocalDateTime.now());
         transaction.setBalance(account.getBalance());
         transaction.setAmount(money);
