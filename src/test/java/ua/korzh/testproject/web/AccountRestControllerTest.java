@@ -14,7 +14,6 @@ import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
 import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.service.account.AccountService;
-import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import java.time.LocalDateTime;
