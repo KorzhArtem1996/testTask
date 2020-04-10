@@ -14,10 +14,8 @@ import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.service.account.AccountService;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 @Service
 public class ClientServiceImpl implements ClientService, InitializingBean {
@@ -68,7 +66,7 @@ public class ClientServiceImpl implements ClientService, InitializingBean {
     @Override
     public Account deposit(long money, int accountId) {
         LOGGER.info(DEPOSIT_START_MESSAGE, money, accountId);
-        Account account = accountService.deposite(money, accountId);
+        Account account = accountService.deposit(money, accountId);
         LOGGER.info(DEPOSIT_SUCCESS_MESSAGE, money, accountId);
         return account;
     }

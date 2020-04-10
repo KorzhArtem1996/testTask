@@ -2,6 +2,7 @@ package ua.korzh.testproject.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
 import ua.korzh.testproject.exception.AccountNotExistException;
@@ -20,7 +21,8 @@ class AccountRestControllerExceptionHandlerTest {
                 exceptionHandler.handleAccountNotExistOrNegativeAccountIdOrNegativeSumOrNotEnoughMoney(
                         new AccountNotExistException("Account not exist"), null);
 
-        assertEquals("<400 BAD_REQUEST Bad Request,Account not exist,[]>", accountNotExist.toString());
+        assertEquals(HttpStatus.BAD_REQUEST, accountNotExist.getStatusCode());
+        assertEquals(400, accountNotExist.getStatusCodeValue());
 
     }
 
@@ -29,7 +31,8 @@ class AccountRestControllerExceptionHandlerTest {
         ResponseEntity<Object> emailExists = exceptionHandler.handleEmailExists(
                 new EmailExistsException("Email already exists"), null);
 
-        assertEquals("<409 CONFLICT Conflict,Email already exists,[]>", emailExists.toString());
+        assertEquals(HttpStatus.CONFLICT, emailExists.getStatusCode());
+        assertEquals(409, emailExists.getStatusCodeValue());
     }
 
 }

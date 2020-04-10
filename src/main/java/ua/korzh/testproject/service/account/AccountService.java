@@ -6,18 +6,15 @@ import ua.korzh.testproject.model.Client;
 import java.util.List;
 
 public interface AccountService {
-    public Account create(Client client);
 
-    public void addMoney(Account account, long balance);
+    Account create(Client client);
 
-    public void withDrawMoney(Account account, long sum);
+    Account deposit(long money, int accountId);
 
-    public Account deposite(long money, int accountId);
+    Account withdraw(long sum, int accountId);
 
-    public Account withdraw(long sum, int accountId);
+    long checkBalance(int accountId);
 
-    public long checkBalance(int accountId);
-
-    public List<Transaction> history(int accountId);
+    List<Transaction> history(int accountId);
 
 }

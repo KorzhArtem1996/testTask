@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
 import ua.korzh.testproject.model.Transaction;
-import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -38,56 +37,68 @@ public class AccountRestControllerTest {
 
     @Test
     public void depositMoneyTest() throws Exception {
-        Account account1 = new Account();
-        account1.setBalance(100L);
-        Account account2 = new Account();
-        account2.setBalance(200L);
-        given(clientService.deposit(eq(500L), eq(1))).willReturn(account1, account2);
+        Account account = new Account();
+        account.setBalance(100L);
+        long money = 500L;
+        int clientId = 1;
+        int accountId = 1;
+        given(clientService.deposit(eq(money), eq(accountId))).willReturn(account);
 
         ResultActions resultActions = this.mockMvc.perform(
-                put("/clients/{clientId}/accounts/{accountId}/deposit?money=500", 1, 1).accept(MediaType.APPLICATION_JSON));
+                put("/clients/{clientId}/accounts/{accountId}/deposit?money={money}",
+                        clientId, accountId, money));
 
         resultActions.andExpect(status().isOk());
-        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account1)));
+        resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(account)));
     }
 
     @Test
     public void withdrawMoneyTest() throws Exception {
-        Client client = new Client("withdraw", "money");
         Account account = new Account();
         account.setBalance(100L);
-        given(clientService.withdraw(eq(100L), eq(1))).willReturn(account);
+        long sum = 100L;
+        int clientId = 1;
+        int accountId = 1;
+        given(clientService.withdraw(eq(sum), eq(accountId))).willReturn(account);
 
         ResultActions resultActions = this.mockMvc.perform(
-                put("/clients/{clientI}/accounts/{accountId}/withdraw?sum=100", 1, 1).accept(MediaType.APPLICATION_JSON));
+                put("/clients/{clientI}/accounts/{accountId}/withdraw?sum={sum}",
+                        clientId, accountId, sum));
 
         resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
         resultActions.andExpect(content().string(MAPPER.writeValueAsString(account)));
     }
 
     @Test
     public void checkBalanceTest() throws Exception {
-        Client client = new Client("check", "balance");
-        client.addAccount(new Account());
-        given(clientService.checkBalance(eq(1))).willReturn(500L);
+        int clientId = 1;
+        int accountId = 1;
+        long balance = 500L;
+        given(clientService.checkBalance(eq(accountId))).willReturn(balance);
 
         ResultActions resultActions = this.mockMvc.perform(
-                get("/clients/{clientId}/accounts/{accountId}/balance", 1, 1).accept(MediaType.APPLICATION_JSON));
+                get("/clients/{clientId}/accounts/{accountId}/balance",
+                        clientId, accountId).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
-        resultActions.andExpect(content().string(MAPPER.writeValueAsString(500L)));
+        resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(balance)));
     }
 
     @Test
     public void showTransactionTest() throws Exception {
-        Client client = new Client("show", "history");
         List<Transaction> list = Arrays.asList(new Transaction(OperationName.DEPOSIT, LocalDateTime.now()),
                 new Transaction(OperationName.WITHDRAW, LocalDateTime.now()),
                 new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
-        given(clientService.showTransaction(eq(1))).willReturn(list);
+        int clientId = 1;
+        int accountId = 1;
+        given(clientService.showTransaction(eq(accountId))).willReturn(list);
 
         ResultActions resultActions = this.mockMvc.perform(
-                get("/clients/{clientId}/accounts/{accountId}/history", 1, 1).accept(MediaType.APPLICATION_JSON));
+                get("/clients/{clientId}/accounts/{accountId}/history",
+                        clientId, accountId).accept(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));

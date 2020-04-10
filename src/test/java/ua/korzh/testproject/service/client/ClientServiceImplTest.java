@@ -14,7 +14,6 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.repository.TransactionRepository;
-import ua.korzh.testproject.service.account.AccountService;
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -27,8 +26,6 @@ class ClientServiceImplTest {
     private ClientService clientService;
     @Autowired
     private ClientRepository clientRepository;
-    @Autowired
-    private AccountService accountService;
     @Autowired
     private AcountRepository acountRepository;
     @Autowired
@@ -67,68 +64,76 @@ class ClientServiceImplTest {
     @Test
     @Transactional
     void register() {
-        Client artem = clientService.register("artem", "1234");
+        String email = "artem";
+        Client artem = clientService.register(email, "1234");
 
-        Exception exception = assertThrows(EmailExistsException.class, () -> {
-            Client korzh = clientService.register("artem", "5678");
-        });
         Client actual = clientService.getById(artem.getId());
 
         assertEquals(artem, actual);
+        Exception exception = assertThrows(EmailExistsException.class, () -> {
+            Client korzh = clientService.register(email, "5678");
+        });
     }
 
     @Test
     @Transactional
     void deposit() {
+        long money = 500L;
         Client client = clientService.register("deposite", "ssss");
-        Exception exception = assertThrows(NegativeSumException.class, () -> {
-            clientService.deposit(-55L, client.getAccountsId().get(0));
-        });
-        Account actualAccount = clientService.deposit( 500L, client.getAccountsId().get(0));
+        long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
+        Account actualAccount = clientService.deposit( money, client.getAccountsId().get(0));
 
         long actualBalance = actualAccount.getBalance();
 
-        assertEquals(500L, actualBalance);
-
+        assertEquals(initialBalance + money, actualBalance);
+        Exception exception = assertThrows(NegativeSumException.class, () -> {
+            clientService.deposit(-55L, client.getAccountsId().get(0));
+        });
     }
 
     @Test
     @Transactional
     void withdraw() {
         Client client = clientService.register("withdraw", "lllll");
+        long sum = 50L;
         clientService.deposit(100L, client.getAccountsId().get(0));
-        Exception exception = assertThrows(NotEnoughMoneyException.class, () -> {
-            Account res = clientService.withdraw(120L, client.getAccountsId().get(0));
-        });
-        Account actualAccount = clientService.withdraw(50L, client.getAccountsId().get(0));
+        long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
+        Account actualAccount = clientService.withdraw(sum, client.getAccountsId().get(0));
 
         long actualBalance = actualAccount.getBalance();
 
-        assertEquals(50L, actualBalance);
+        assertEquals(initialBalance + sum, actualBalance);
+        Exception exception = assertThrows(NotEnoughMoneyException.class, () -> {
+            Account res = clientService.withdraw(120L, client.getAccountsId().get(0));
+        });
     }
 
     @Test
     @Transactional
     void checkBalance() {
         Client client = clientService.register("check", "cccc");
-        Account actualAccount = clientService.deposit(500L, client.getAccountsId().get(0));
+        long money = 500L;
+        long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
+        Account actualAccount = clientService.deposit(money, client.getAccountsId().get(0));
 
         long actualBalance = clientService.checkBalance(actualAccount.getId());
 
-        assertEquals(500L, actualBalance);
+        assertEquals(initialBalance + money, actualBalance);
     }
 
     @Test
     @Transactional
     void showTransaction() {
         Client client = clientService.register("show", "history");
-        clientService.deposit(100L, client.getAccountsId().get(0));
+        long money = 100L;
+        clientService.deposit(money, client.getAccountsId().get(0));
         clientService.deposit(30L, client.getAccountsId().get(0));
-        int id = clientService.withdraw(100L, client.getAccountsId().get(0)).getId();
+        int id = clientService.withdraw(money, client.getAccountsId().get(0)).getId();
         Account account = acountRepository.getById(id);
 
         List<Transaction> actualTransactions = account.getTransactions();
 
+        assertEquals(3, actualTransactions.size());
         assertEquals(actualTransactions, clientService.showTransaction(account.getId()));
     }
 }
