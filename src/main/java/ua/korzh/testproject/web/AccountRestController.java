@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.Transaction;
+import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import java.util.List;
 
@@ -11,25 +12,25 @@ import java.util.List;
 public class AccountRestController {
 
     @Autowired
-    private ClientService clientService;
+    private AccountService accountService;
 
     @PutMapping("/clients/{clientId}/accounts/{accountId}/deposit")
     public Account deposit(@PathVariable int clientId, @RequestParam Long money, @PathVariable int accountId) {
-        return clientService.deposit(money, accountId);
+        return accountService.deposit(money, accountId);
     }
 
     @PutMapping("/clients/{clientId}/accounts/{accountId}/withdraw")
     public Account withdraw(@PathVariable int clientId, @RequestParam Long sum, @PathVariable int accountId) {
-        return clientService.withdraw(sum, accountId);
+        return accountService.withdraw(sum, accountId);
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/balance")
     public long checkBalance(@PathVariable int clientId, @PathVariable int accountId) {
-        return clientService.checkBalance(accountId);
+        return accountService.checkBalance(accountId);
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/history")
     public List<Transaction> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
-        return clientService.showTransaction(accountId);
+        return accountService.history(accountId);
     }
 }

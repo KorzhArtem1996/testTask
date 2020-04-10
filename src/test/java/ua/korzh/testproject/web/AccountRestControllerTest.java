@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import ua.korzh.testproject.model.Account;
 import ua.korzh.testproject.model.OperationName;
 import ua.korzh.testproject.model.Transaction;
+import ua.korzh.testproject.service.account.AccountService;
 import ua.korzh.testproject.service.client.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,7 +34,7 @@ public class AccountRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private ClientService clientService;
+    private AccountService accountService;
 
     @Test
     public void depositMoneyTest() throws Exception {
@@ -42,7 +43,7 @@ public class AccountRestControllerTest {
         long money = 500L;
         int clientId = 1;
         int accountId = 1;
-        given(clientService.deposit(eq(money), eq(accountId))).willReturn(account);
+        given(accountService.deposit(eq(money), eq(accountId))).willReturn(account);
 
         ResultActions resultActions = this.mockMvc.perform(
                 put("/clients/{clientId}/accounts/{accountId}/deposit?money={money}",
@@ -60,7 +61,7 @@ public class AccountRestControllerTest {
         long sum = 100L;
         int clientId = 1;
         int accountId = 1;
-        given(clientService.withdraw(eq(sum), eq(accountId))).willReturn(account);
+        given(accountService.withdraw(eq(sum), eq(accountId))).willReturn(account);
 
         ResultActions resultActions = this.mockMvc.perform(
                 put("/clients/{clientI}/accounts/{accountId}/withdraw?sum={sum}",
@@ -76,7 +77,7 @@ public class AccountRestControllerTest {
         int clientId = 1;
         int accountId = 1;
         long balance = 500L;
-        given(clientService.checkBalance(eq(accountId))).willReturn(balance);
+        given(accountService.checkBalance(eq(accountId))).willReturn(balance);
 
         ResultActions resultActions = this.mockMvc.perform(
                 get("/clients/{clientId}/accounts/{accountId}/balance",
@@ -94,7 +95,7 @@ public class AccountRestControllerTest {
                 new Transaction(OperationName.DEPOSIT, LocalDateTime.now()));
         int clientId = 1;
         int accountId = 1;
-        given(clientService.showTransaction(eq(accountId))).willReturn(list);
+        given(accountService.history(eq(accountId))).willReturn(list);
 
         ResultActions resultActions = this.mockMvc.perform(
                 get("/clients/{clientId}/accounts/{accountId}/history",

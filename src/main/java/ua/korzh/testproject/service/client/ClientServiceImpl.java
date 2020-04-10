@@ -64,38 +64,6 @@ public class ClientServiceImpl implements ClientService, InitializingBean {
     }
 
     @Override
-    public Account deposit(long money, int accountId) {
-        LOGGER.info(DEPOSIT_START_MESSAGE, money, accountId);
-        Account account = accountService.deposit(money, accountId);
-        LOGGER.info(DEPOSIT_SUCCESS_MESSAGE, money, accountId);
-        return account;
-    }
-
-    @Override
-    public Account withdraw(long sum, int accountId) {
-        LOGGER.info(WITHDRAW_START_MESSAGE, sum, accountId);
-        Account account = accountService.withdraw(sum, accountId);
-        LOGGER.info(WITHDRAW_SUCCESS_MESSAGE, sum, accountId);
-        return account;
-    }
-
-    @Override
-    public long checkBalance(int accountId) {
-        LOGGER.info(CHECK_BALANCE_START_MESSAGE, accountId);
-        long res = accountService.checkBalance(accountId);
-        LOGGER.info(CHECK_BALANCE_SUCCESS_MESSAGE, accountId);
-        return res;
-    }
-
-    @Override
-    public List<Transaction> showTransaction(int accountId) {
-        LOGGER.info(SHOW_TRANSACTION_START_MESSAGE, accountId);
-        List<Transaction> res = accountService.history(accountId);
-        LOGGER.info(SHOW_TRANSACTION_SUCCESS_MESSAGE, accountId);
-        return res;
-    }
-
-    @Override
     public void afterPropertiesSet() throws Exception {
         List<String> clients = clientRepository.getAllUserEmails();
         EMAILS.addAll(clients);

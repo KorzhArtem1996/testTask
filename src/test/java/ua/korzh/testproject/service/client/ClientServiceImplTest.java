@@ -14,6 +14,8 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.repository.TransactionRepository;
+import ua.korzh.testproject.service.account.AccountService;
+
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -24,6 +26,8 @@ class ClientServiceImplTest {
 
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private AccountService accountService;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -81,13 +85,13 @@ class ClientServiceImplTest {
         long money = 500L;
         Client client = clientService.register("deposite", "ssss");
         long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
-        Account actualAccount = clientService.deposit( money, client.getAccountsId().get(0));
+        Account actualAccount = accountService.deposit( money, client.getAccountsId().get(0));
 
         long actualBalance = actualAccount.getBalance();
 
         assertEquals(initialBalance + money, actualBalance);
         Exception exception = assertThrows(NegativeSumException.class, () -> {
-            clientService.deposit(-55L, client.getAccountsId().get(0));
+            accountService.deposit(-55L, client.getAccountsId().get(0));
         });
     }
 
@@ -96,15 +100,15 @@ class ClientServiceImplTest {
     void withdraw() {
         Client client = clientService.register("withdraw", "lllll");
         long sum = 50L;
-        clientService.deposit(100L, client.getAccountsId().get(0));
+        accountService.deposit(100L, client.getAccountsId().get(0));
         long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
-        Account actualAccount = clientService.withdraw(sum, client.getAccountsId().get(0));
+        Account actualAccount = accountService.withdraw(sum, client.getAccountsId().get(0));
 
         long actualBalance = actualAccount.getBalance();
 
         assertEquals(initialBalance + sum, actualBalance);
         Exception exception = assertThrows(NotEnoughMoneyException.class, () -> {
-            Account res = clientService.withdraw(120L, client.getAccountsId().get(0));
+            Account res = accountService.withdraw(120L, client.getAccountsId().get(0));
         });
     }
 
@@ -114,9 +118,9 @@ class ClientServiceImplTest {
         Client client = clientService.register("check", "cccc");
         long money = 500L;
         long initialBalance = client.getAccount(client.getAccountsId().get(0)).getBalance();
-        Account actualAccount = clientService.deposit(money, client.getAccountsId().get(0));
+        Account actualAccount = accountService.deposit(money, client.getAccountsId().get(0));
 
-        long actualBalance = clientService.checkBalance(actualAccount.getId());
+        long actualBalance = accountService.checkBalance(actualAccount.getId());
 
         assertEquals(initialBalance + money, actualBalance);
     }
@@ -126,14 +130,14 @@ class ClientServiceImplTest {
     void showTransaction() {
         Client client = clientService.register("show", "history");
         long money = 100L;
-        clientService.deposit(money, client.getAccountsId().get(0));
-        clientService.deposit(30L, client.getAccountsId().get(0));
-        int id = clientService.withdraw(money, client.getAccountsId().get(0)).getId();
+        accountService.deposit(money, client.getAccountsId().get(0));
+        accountService.deposit(30L, client.getAccountsId().get(0));
+        int id = accountService.withdraw(money, client.getAccountsId().get(0)).getId();
         Account account = acountRepository.getById(id);
 
         List<Transaction> actualTransactions = account.getTransactions();
 
         assertEquals(3, actualTransactions.size());
-        assertEquals(actualTransactions, clientService.showTransaction(account.getId()));
+        assertEquals(actualTransactions, accountService.history(account.getId()));
     }
 }
