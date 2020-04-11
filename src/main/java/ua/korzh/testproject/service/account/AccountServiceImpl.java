@@ -14,14 +14,13 @@ import ua.korzh.testproject.model.Transaction;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.repository.AcountRepository;
-import ua.korzh.testproject.service.client.ClientServiceImpl;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceImpl.class);
     private static final String ACCOUNT_NOT_EXISTS = "Account with id %d does not exist";
     private static final String POSITIVE_SUM = "Sum of money must be positive";
     private static final String NOT_ENOUGH_MONEY = "You do not have enough money! Balance: %d";
@@ -29,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     private static final String DEPOSIT_SUCCESS_MESSAGE = "deposit(money, accountId) succeeded, money={}, accountId={}";
     private static final String WITHDRAW_START_MESSAGE = "withdraw(sum, accountId) started, sum={}, accountId={}";
     private static final String WITHDRAW_SUCCESS_MESSAGE = "withdraw(sum, accountId) succeeded, sum={}, accountId={}";
-    private static final String CHECK_BALANCE_START_MESSAGE = "checkBalance(accountId) started, accountId={}";;
+    private static final String CHECK_BALANCE_START_MESSAGE = "checkBalance(accountId) started, accountId={}";
     private static final String CHECK_BALANCE_SUCCESS_MESSAGE = "checkBalance(accountId) succeeded, accountId={}";
     private static final String SHOW_TRANSACTION_START_MESSAGE = "showTransaction(accountId) started, accountId={}";
     private static final String SHOW_TRANSACTION_SUCCESS_MESSAGE = "showTransaction(accountId) succeeded, accountId={}";
