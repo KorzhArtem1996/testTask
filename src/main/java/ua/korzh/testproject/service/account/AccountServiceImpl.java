@@ -32,7 +32,10 @@ public class AccountServiceImpl implements AccountService {
     private static final String CHECK_BALANCE_SUCCESS_MESSAGE = "checkBalance(accountId) succeeded, accountId={}";
     private static final String SHOW_TRANSACTION_START_MESSAGE = "showTransaction(accountId) started, accountId={}";
     private static final String SHOW_TRANSACTION_SUCCESS_MESSAGE = "showTransaction(accountId) succeeded, accountId={}";
-
+    private static final String CLOSE_START_MESSAGE = "close(accountId) started, accountId={}";
+    private static final String CLOSE_SUCCESS_MESSAGE = "close(accountId) succeeded, accountId={}";
+    private static final String ACCOUNT_CLOSED = "Account with id %d closed. " +
+                                                 "You can not execute %s operation with closed account";
 
     @Autowired
     private AcountRepository acountRepository;
@@ -76,6 +79,9 @@ public class AccountServiceImpl implements AccountService {
         if (money < 0) throw new NegativeSumException(POSITIVE_SUM);
         Account account = acountRepository.getById(accountId);
         if (account == null) {throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));}
+        if (account.isClosed()) {
+            throw new AccountClosedException(String.format(ACCOUNT_CLOSED, accountId, "deposit"));
+        }
         createTransaction(OperationName.DEPOSIT, account, money);
         LOGGER.info(DEPOSIT_SUCCESS_MESSAGE, money, accountId);
         return account;
@@ -88,6 +94,9 @@ public class AccountServiceImpl implements AccountService {
         if (sum < 0) throw new NegativeSumException(POSITIVE_SUM);
         Account account = acountRepository.getById(accountId);
         if (account == null) {throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));}
+        if (account.isClosed()) {
+            throw new AccountClosedException(String.format(ACCOUNT_CLOSED, accountId, "withdraw"));
+        }
         if (sum > account.getBalance()) {
             throw new NotEnoughMoneyException(String.format(NOT_ENOUGH_MONEY, account.getBalance()));
         }
@@ -114,5 +123,20 @@ public class AccountServiceImpl implements AccountService {
         List<Transaction> transactions = account.getTransactions();
         LOGGER.info(SHOW_TRANSACTION_SUCCESS_MESSAGE, accountId);
         return transactions;
+    }
+
+    @Override
+    @Transactional
+    public boolean close(int accountId) {
+        LOGGER.info(CLOSE_START_MESSAGE, accountId);
+        Account account = acountRepository.getById(accountId);
+        if (account == null) {throw new AccountNotExistException(String.format(ACCOUNT_NOT_EXISTS, accountId));}
+        if (account.isClosed()) {
+            return false;
+        }
+        account.close();
+        acountRepository.saveAndFlush(account);
+        LOGGER.info(CLOSE_SUCCESS_MESSAGE, accountId);
+        return true;
     }
 }

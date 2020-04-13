@@ -100,4 +100,19 @@ public class AccountRestControllerTest {
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    public void closeAccountTest() throws Exception {
+        int clientId = 1;
+        int accountId = 1;
+        boolean result = true;
+        given(accountService.close(eq(accountId))).willReturn(result);
+
+        ResultActions resultActions = this.mockMvc.perform(
+                put("/clients/{clientId}/accounts/{accountId}/close", clientId, accountId));
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(content().string(MAPPER.writeValueAsString(result)));
+    }
 }

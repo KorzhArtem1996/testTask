@@ -20,6 +20,8 @@ public class Account {
     @Column(name = "NATURAL_ID", nullable = false)
     @Min(0)
     private  int naturalId;
+    @Column(name = "CLOSED")
+    private boolean closed;
     @ManyToOne(optional = false)
     @JoinColumn(name = "CLIENT")
     private Client client;
@@ -57,6 +59,14 @@ public class Account {
 
     public List<Transaction> getTransactions() {
         return this.transactions;
+    }
+
+    public void close() {
+        this.closed = true;
+    }
+
+    public boolean isClosed() {
+        return closed;
     }
 
     @Override

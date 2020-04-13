@@ -17,4 +17,5 @@ public interface AccountService {
 
     List<Transaction> history(int accountId);
 
+    boolean close(int accountId);
 }

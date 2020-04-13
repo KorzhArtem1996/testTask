@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import ua.korzh.testproject.exception.AccountClosedException;
 import ua.korzh.testproject.exception.NegativeSumException;
 import ua.korzh.testproject.exception.NotEnoughMoneyException;
 import ua.korzh.testproject.model.Account;
@@ -16,7 +17,7 @@ import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.service.client.ClientService;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AccountServiceImplTest {
@@ -99,5 +100,22 @@ public class AccountServiceImplTest {
 
         assertEquals(3, actualTransactions.size());
         assertEquals(actualTransactions, accountService.history(account.getId()));
+    }
+
+    @Test
+    public void closeTest() {
+        Client client = clientService.register("close", "account");
+        int accountId = client.getAccountsId().get(0);
+        accountService.close(client.getAccountsId().get(0));
+
+        boolean closed = acountRepository.getById(accountId).isClosed();
+
+        assertTrue(closed);
+        Exception depositException = assertThrows(AccountClosedException.class, () ->{
+           accountService.deposit(100L, accountId);
+        });
+        Exception withdrawException = assertThrows(AccountClosedException.class, () ->{
+           accountService.withdraw(50L, accountId);
+        });
     }
 }

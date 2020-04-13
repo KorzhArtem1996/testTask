@@ -32,4 +32,9 @@ public class AccountRestController {
     public List<Transaction> showHistroy(@PathVariable int clientId, @PathVariable int accountId) {
         return accountService.history(accountId);
     }
+
+    @PutMapping("/clients/{clientId}/accounts/{accountId}/close")
+    public boolean closeAccount(@PathVariable int clientId, @PathVariable int accountId) {
+        return accountService.close(accountId);
+    }
 }
