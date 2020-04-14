@@ -1,26 +1,22 @@
 package ua.korzh.testproject.service.account;
 
-import static  org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.transaction.annotation.Transactional;
 import ua.korzh.testproject.model.Client;
 import ua.korzh.testproject.repository.AcountRepository;
 import ua.korzh.testproject.repository.ClientRepository;
 import ua.korzh.testproject.repository.TransactionRepository;
 import ua.korzh.testproject.service.client.ClientService;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class ParallelDepositeTest {
+public class ParallelWithdrawTest {
 
-    @SpyBean
-    private AccountServiceImpl accountService;
     @Autowired
     private ClientService clientService;
     @Autowired
@@ -29,6 +25,8 @@ public class ParallelDepositeTest {
     private AcountRepository acountRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @SpyBean
+    protected AccountServiceImpl accountService;
 
     @BeforeEach
     public void clearDB() {
@@ -38,17 +36,17 @@ public class ParallelDepositeTest {
     }
 
     @Test
-    @Transactional
-    public void parallelDepositTest() {
-        Client client = clientService.register("parallelDeposit", "deposit");
+    public void parallelWithdrawTest() {
+        Client client = clientService.register("parallelWithdraw", "withdraw");
+        accountService.deposit(500L, client.getAccountsId().get(0));
         long money = 100L;
         doAnswer(invocationOnMock -> {
-            accountService.deposit(150L, client.getAccountsId().get(0));
+            accountService.withdraw(150L, client.getAccountsId().get(0));
             return invocationOnMock.callRealMethod();
         }).when(accountService).createTransaction(any(), any(), eq(money));
 
-        Exception exception = assertThrows(ObjectOptimisticLockingFailureException.class, () ->{
-            accountService.deposit(money, client.getAccountsId().get(0));
+        Exception exception = assertThrows(ObjectOptimisticLockingFailureException.class, () -> {
+            accountService.withdraw(money, client.getAccountsId().get(0));
         });
     }
 }
