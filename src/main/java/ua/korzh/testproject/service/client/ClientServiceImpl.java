@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Implementation of {@link ClientService} interface.
+ *
+ * @author Korzh Artem
+ * @version 1.0
+ */
 @Service
 public class ClientServiceImpl implements ClientService, InitializingBean {
 

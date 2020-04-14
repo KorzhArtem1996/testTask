@@ -21,7 +21,7 @@ class RestControllerExceptionHandlerTest {
     @Test
     void handleAccountNotExist() {
         ResponseEntity<Object> accountNotExist =
-                exceptionHandler.handleAccountNotExistOrNegativeAccountIdOrNegativeSumOrNotEnoughMoney(
+                exceptionHandler.handleAccountExceptions(
                         new AccountNotExistException("Account not exist"), null);
 
         assertEquals(HttpStatus.BAD_REQUEST, accountNotExist.getStatusCode());

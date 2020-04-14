@@ -59,7 +59,20 @@ public class Transaction {
         this.account = account;
     }
 
-    public LocalDateTime getTimestamp() { return this.timestamp; }
+    public LocalDateTime getTimestamp() {
+        return this.timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "operationName=" + operationName +
+                ", balance=" + balance +
+                ", amount=" + amount +
+                ", timestamp=" + timestamp +
+                ", account=" + account +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -76,16 +89,5 @@ public class Transaction {
     @Override
     public int hashCode() {
         return Objects.hash(operationName, balance, amount, timestamp, account);
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "operationName=" + operationName +
-                ", balance=" + balance +
-                ", amount=" + amount +
-                ", timestamp=" + timestamp +
-                ", account=" + account +
-                '}';
     }
 }

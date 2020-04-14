@@ -17,6 +17,12 @@ import ua.korzh.testproject.repository.AcountRepository;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Implementation of {@link AccountService} interface.
+ *
+ * @author Korzh Artem
+ * @version 1.0
+ */
 @Service
 public class AccountServiceImpl implements AccountService {
 

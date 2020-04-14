@@ -28,14 +28,17 @@ public class Account {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "account", fetch = FetchType.LAZY)
     private final List<Transaction> transactions = new ArrayList<>();
 
-    public Account() {}
+    public Account() {
+    }
 
     public Account(int naturalId, long balance) {
         this.naturalId = naturalId;
         this.balance = balance;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
     public long getBalance() {
         return balance;

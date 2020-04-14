@@ -20,8 +20,6 @@ import java.util.List;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//Replace import org.junit.jupiter.api.Test; to import org.junit.Test;
-
 @WebMvcTest(AccountRestController.class)
 public class AccountRestControllerTest {
 

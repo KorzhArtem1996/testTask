@@ -27,10 +27,6 @@ public class Client {
         this.password = password;
     }
 
-    public void addAccount(Account account) {
-        this.accounts.add(account);
-    }
-
     public String getEmail() {
         return email;
     }
@@ -40,6 +36,10 @@ public class Client {
             if (account.getId() == id) return account;
         }
         return null;
+    }
+
+    public void addAccount(Account account) {
+        this.accounts.add(account);
     }
 
     public List<Integer> getAccountsId() {
